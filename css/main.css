@@ -1,0 +1,52 @@
+body {
+  background-color: #3F403E;
+  font-family: 'Heebo';
+  margin: auto;
+}
+
+/* Top menu */
+
+#hidden-menu {
+  background-color: #7E7F7A;
+  position: relative;
+  top: -23px;
+  padding: 5px;
+  transition: 0.5s
+}
+
+#hover-space {
+  background-color: #3F403E;
+  overflow: hidden;
+  height: 35px;
+  color: #FBFEF4;
+  font-size: 0.7rem;
+  letter-spacing: 0.2rem;
+}
+
+/* Vis */
+
+.line {
+  fill: none;
+  stroke: none;
+  stroke-width: 1.5px;
+}
+
+.line2 {
+  fill: none;
+  stroke: red;
+  stroke-width: 1.5px;
+}
+
+.line-text {
+  fill: none;
+  stroke: none;
+  stroke-width: 1.5px;
+}
+
+.scene-text {
+  color: #b0ebe8;
+}
+
+.group-text {
+  color: #0dd169;
+}
