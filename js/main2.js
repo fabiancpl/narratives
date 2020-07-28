@@ -465,7 +465,7 @@ function draw_groups( groups ) {
       .attr( 'stroke', '#0dd169' )
       .attr( 'fill', '#0dd169' )
       .style( 'fill-opacity', .03 )
-      .attr( 'stroke-width', 1 )
+      .attr( 'stroke-width', .5 )
       .attr( 'active', false )
       .attr( 'd', a => line.radius( d => a.r( d.y ) )( datar ) )
       .attr( 'transform', d => 'translate(' + d.h * Math.cos( d.scale( d.id ) * Math.PI * 2 - Math.PI / 2 ) + ', ' + d.h * Math.sin( d.scale( d.id ) * Math.PI * 2 - Math.PI / 2 ) + ')' 
@@ -527,7 +527,7 @@ function draw_characters( characters ) {
       .attr( 'class', 'character' )
       .attr( 'cx', d => ( charactersRadius2 + d.h ) * Math.cos( charactersPos( d.character ) * Math.PI * 2 - Math.PI / 2 ) )
       .attr( 'cy', d => ( charactersRadius2 + d.h ) * Math.sin( charactersPos( d.character ) * Math.PI * 2 - Math.PI / 2 ) )
-      .attr( 'r',  2 )
+      .attr( 'r',  1 )
       .attr( 'fill', '#FEE838' )
       .attr( 'transform', 'translate(' + centroid.x + ', ' + centroid.y + ')' );
 
@@ -618,7 +618,7 @@ function draw_scenes( scenes ) {
       .attr( 'stroke', '#b0ebe8' )
       .attr( 'fill', '#b0ebe8' )
       .style( 'fill-opacity', .03 )
-      .attr( 'stroke-width', 1 )
+      .attr( 'stroke-width', .5 )
       .attr( 'active', false )
       .attr( 'd', a => line.radius( d => a.r( d.y ) )( datar ) )
       .attr( 'transform', d => 'translate(' + d.h * Math.cos( d.scale( d.id ) * Math.PI * 2 - Math.PI / 2 ) + ', ' + d.h * Math.sin( d.scale( d.id ) * Math.PI * 2 - Math.PI / 2 ) + ')' 
