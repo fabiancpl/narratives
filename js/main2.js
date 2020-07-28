@@ -82,10 +82,10 @@ var charactersScale = d3.scaleLinear()
 
 var characterTextScale = d3.scaleLinear()
   .domain( [ 0, points - 1 ] )
-  .range( [ 5 * Math.PI / 6 + 0.1, 5 * Math.PI / 6 - 0.1 ] );
+  .range( [ 5 * Math.PI / 6, 5 * Math.PI / 6 - 0.2 ] );
 
 var charactersPos = d3.scaleBand()
-  .range( [ .05, .45 ] )
+  .range( [ .03, .4 ] )
   .padding( 1 );
 
 var scenesScale1 = d3.scaleLinear()
@@ -513,7 +513,7 @@ function draw_subgroups( subgroups ) {
 function draw_characters( characters ) {
   
   characters.map( c => {
-    c.h = d3.randomInt( -35, 35 )();
+    c.h = d3.randomInt( -30, 30 )();
     return c;
   } );
 
