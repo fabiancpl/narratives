@@ -1,21 +1,31 @@
 
 var width = 1300,
-  height = 900
+  height = 800,
+  centroid = {
+    x: ( 4 * width / 6 ),
+    y: ( 3 * height / 5 ) 
+  };
 
 var points = 100;
 
-var frameworksRadius = 50,
-  groupsRadius = 200,
-  subgroupsRadius = 350,
-  charactersRadius = 500,
-  scenesRadius = 400;
+var frameworksRadius = 10,
+  groupsRadius1 = 130,
+  groupsRadius2 = 200,
+  groupsRadius3 = 270,
+  charactersRadius1 = 350,
+  charactersRadius2 = 400,
+  scenesRadius1 = 150,
+  scenesRadius2 = ( 150 * 2 ) + 20,
+  scenesRadius3 = ( 150 * 3 ) + 30,
+  scenesRadius4 = ( 150 * 4 ) + 40,
+  scenesRadius5 = 150 * 5;
 
 // Loading data
 d3.csv( './data/frameworks.csv' ).then( d => draw_frameworks( d ) );
 
 d3.csv( './data/groups.csv' ).then( d => draw_groups( d ) );
 
-d3.csv( './data/subgroups.csv' ).then( d => draw_subgroups( d ) );
+//d3.csv( './data/subgroups.csv' ).then( d => draw_subgroups( d ) );
 
 d3.csv( './data/characters.csv' ).then( d => draw_characters( d ) );
 
@@ -23,36 +33,52 @@ d3.csv( './data/scenes.csv' ).then( d => draw_scenes( d ) );
 
 /* Scales */
 
+// Frameworks
+
 var frameworksScale = d3.scaleLinear()
   .domain( [ 0, points - 1 ] )
   .range( [ 0, 2 * Math.PI ] );
 
 var frameworkTextScale = d3.scaleLinear()
   .domain( [ 0, points - 1 ] )
-  .range( [ -0.3, 0.3 ] );
+  .range( [ -0.35, 0.35 ] );
 
 var frameworksPos = d3.scaleBand()
     .range( [ 0, 1 ] );
 
-var groupsScale = d3.scaleLinear()
+// Groups
+
+var groupsScale1 = d3.scaleLinear()
   .domain( [ 0, points - 1 ] )
-  .range( [ Math.PI / 6, 5 * Math.PI / 6 ] );
+  .range( [ 4.5 * Math.PI / 6, 5.5 * Math.PI / 6 ] );
+
+var groupsScale2 = d3.scaleLinear()
+  .domain( [ 0, points - 1 ] )
+  .range( [ Math.PI / 6, 4 * Math.PI / 6 ] );
+
+var groupsScale3 = d3.scaleLinear()
+  .domain( [ 0, points - 1 ] )
+  .range( [ 2 * Math.PI / 6, 3 * Math.PI / 6 ] );
 
 var groupTextScale = d3.scaleLinear()
   .domain( [ 0, points - 1 ] )
-  .range( [ 0.3, 0.9 ] );
+  .range( [ Math.PI / 6 - 0.3, Math.PI / 6 + 0.2 ] );
 
-var groupsPos = d3.scaleBand()
-  .range( [ .05, .45 ] )
+var groupsPos1 = d3.scaleBand()
+  .range( [ .3, .5 ] )
   .padding( 1 );
 
-var subgroupsScale = d3.scaleLinear()
-  .domain( [ 0, points - 1 ] )
-  .range( [ Math.PI / 6, 5 * Math.PI / 6 ] );
-
-var subgroupsPos = d3.scaleBand()
-  .range( [ .05, .45 ] )
+var groupsPos2 = d3.scaleBand()
+  .range( [ .04, .4 ] )
   .padding( 1 );
+
+var groupsPos3 = d3.scaleBand()
+  .range( [ .07, .34 ] )
+  .padding( 1 );
+
+var groupsSize = d3.scaleLinear()
+  .domain( [ 1, 11 ] )
+  .range( [ 3, 40 ] );
 
 var charactersScale = d3.scaleLinear()
   .domain( [ 0, points - 1 ] )
@@ -60,23 +86,59 @@ var charactersScale = d3.scaleLinear()
 
 var characterTextScale = d3.scaleLinear()
   .domain( [ 0, points - 1 ] )
-  .range( [ 5 * Math.PI / 6, 4.5 * Math.PI / 6 ] );
+  .range( [ 5 * Math.PI / 6, 5 * Math.PI / 6 - 0.2 ] );
 
 var charactersPos = d3.scaleBand()
-  .range( [ .12, .38 ] )
+  .range( [ .05, .4 ] )
   .padding( 1 );
 
-var scenesScale = d3.scaleLinear()
+var scenesScale1 = d3.scaleLinear()
   .domain( [ 0, points - 1 ] )
-  .range( [ 7 * Math.PI / 6, 11 * Math.PI / 6 ] );
+  .range( [ 11 * Math.PI / 10, 19 * Math.PI / 10 ] );
+
+var scenesScale2 = d3.scaleLinear()
+  .domain( [ 0, points - 1 ] )
+  .range( [ 11 * Math.PI / 10, 19 * Math.PI / 10 ] );
+
+var scenesScale3 = d3.scaleLinear()
+  .domain( [ 0, points - 1 ] )
+  .range( [ 13 * Math.PI / 10, 19 * Math.PI / 10 ] );
+
+var scenesScale4 = d3.scaleLinear()
+  .domain( [ 0, points - 1 ] )
+  .range( [ 13 * Math.PI / 10, 18 * Math.PI / 10 ] );
+
+var scenesScale5 = d3.scaleLinear()
+  .domain( [ 0, points - 1 ] )
+  .range( [ 14 * Math.PI / 10, 17 * Math.PI / 10 ] );
 
 var sceneTextScale = d3.scaleLinear()
   .domain( [ 0, points - 1 ] )
-  .range( [ 10.7 * Math.PI / 6, 11 * Math.PI / 6 ] );
+  .range( [ 18 * Math.PI / 10 - 0.07, 18 * Math.PI / 10 + 0.07 ] );
 
-var scenesPos = d3.scaleBand()
-  .range( [ .6, .9 ] )
+var scenesPos1 = d3.scaleBand()
+  .range( [ .4, 1.1 ] )
   .padding( 1 );
+
+var scenesPos2 = d3.scaleBand()
+  .range( [ .51, 1.05 ] )
+  .padding( 1 );
+
+var scenesPos3 = d3.scaleBand()
+  .range( [ .62, .95 ] )
+  .padding( 1 );
+
+var scenesPos4 = d3.scaleBand()
+  .range( [ .65, .89 ] )
+  .padding( 1 );
+
+var scenesPos5 = d3.scaleBand()
+  .range( [ .68, .87 ] )
+  .padding( 1 );
+
+var scenesSize = d3.scaleLinear()
+  .domain( [ 1, 4 ] )
+  .range( [ 10, 30 ] );
 
 /* Shapes */
 
@@ -85,35 +147,61 @@ var frameworksLine = d3.lineRadial()
   .angle( ( d, i ) => frameworksScale( i ) );
 
 var frameworkTextLine = d3.lineRadial()
-  .radius( frameworksRadius + 25 )
+  .radius( frameworksRadius + 50 )
   .angle( ( d, i ) => frameworkTextScale( i ) );
 
-var groupsLine = d3.lineRadial()
-  .radius( groupsRadius )
-  .angle( ( d, i ) => groupsScale( i ) );
+var groupsLine1 = d3.lineRadial()
+  .radius( groupsRadius1 )
+  .angle( ( d, i ) => groupsScale1( i ) );
+
+var groupsLine2 = d3.lineRadial()
+  .radius( groupsRadius2 )
+  .angle( ( d, i ) => groupsScale2( i ) );
+
+var groupsLine3 = d3.lineRadial()
+  .radius( groupsRadius3 )
+  .angle( ( d, i ) => groupsScale3( i ) );
 
 var groupTextLine = d3.lineRadial()
-  .radius( groupsRadius + 75 )
+  .radius( groupsRadius2 + 50 )
   .angle( ( d, i ) => groupTextScale( i ) );
 
-var subgroupsLine = d3.lineRadial()
-  .radius( subgroupsRadius )
-  .angle( ( d, i ) => subgroupsScale( i ) );
+var charactersLine1 = d3.lineRadial()
+  .radius( charactersRadius1 )
+  .angle( ( d, i ) => charactersScale( i ) );
 
-var charactersLine = d3.lineRadial()
-  .radius( charactersRadius )
+var charactersLine2 = d3.lineRadial()
+  .radius( charactersRadius2 )
   .angle( ( d, i ) => charactersScale( i ) );
 
 var characterTextLine = d3.lineRadial()
-  .radius( charactersRadius - 25 )
+  .radius( charactersRadius1 - 25 )
   .angle( ( d, i ) => characterTextScale( i ) );
 
-var scenesLine = d3.lineRadial()
-  .radius( scenesRadius )
-  .angle( ( d, i ) => scenesScale( i ) );
+// Scenes
+
+var scenesLine1 = d3.lineRadial()
+  .radius( scenesRadius1 )
+  .angle( ( d, i ) => scenesScale1( i ) );
+
+var scenesLine2 = d3.lineRadial()
+  .radius( scenesRadius2 )
+  .angle( ( d, i ) => scenesScale2( i ) );
+
+var scenesLine3 = d3.lineRadial()
+  .radius( scenesRadius3 )
+  .angle( ( d, i ) => scenesScale3( i ) );
+
+var scenesLine4 = d3.lineRadial()
+  .radius( scenesRadius4 )
+  .angle( ( d, i ) => scenesScale4( i ) );
+
+var scenesLine5 = d3.lineRadial()
+  .radius( scenesRadius5 )
+  .angle( ( d, i ) => scenesScale5( i ) );
 
 var sceneTextLine = d3.lineRadial()
-  .radius( scenesRadius + 25 )
+  .radius( scenesRadius3 + 80 )
   .angle( ( d, i ) => sceneTextScale( i ) );
 
 /* Drawing */
@@ -129,14 +217,14 @@ svg.append( 'path' )
   .datum( d3.range( points ) )
     .attr( 'class', 'line' )
     .attr( 'd', frameworksLine )
-    .attr( 'transform', 'translate(' + width / 2 + ', ' + height / 2 + ')' );
+    .attr( 'transform', 'translate(' + centroid.x + ', ' + centroid.y + ')' );
 
 svg.append( 'path' )
   .datum( d3.range( points ) )
     .attr( 'id', 'frameworkText' )
     .attr( 'class', 'line-text' )
     .attr( 'd', frameworkTextLine )
-    .attr( 'transform', 'translate(' + width / 2 + ', ' + height / 2 + ')' );
+    .attr( 'transform', 'translate(' + centroid.x + ', ' + centroid.y + ')' );
 
 svg.append( 'text' )
   .append( 'textPath' )
@@ -154,15 +242,27 @@ svg.append( 'use' )
 svg.append( 'path' )
   .datum( d3.range( points ) )
     .attr( 'class', 'line' )
-    .attr( 'd', groupsLine )
-    .attr( 'transform', 'translate(' + width / 2 + ', ' + height / 2 + ')' );
+    .attr( 'd', groupsLine1 )
+    .attr( 'transform', 'translate(' + centroid.x + ', ' + centroid.y + ')' );
+
+svg.append( 'path' )
+  .datum( d3.range( points ) )
+    .attr( 'class', 'line' )
+    .attr( 'd', groupsLine2 )
+    .attr( 'transform', 'translate(' + centroid.x + ', ' + centroid.y + ')' );
+
+svg.append( 'path' )
+  .datum( d3.range( points ) )
+    .attr( 'class', 'line' )
+    .attr( 'd', groupsLine3 )
+    .attr( 'transform', 'translate(' + centroid.x + ', ' + centroid.y + ')' );
 
 svg.append( 'path' )
   .datum( d3.range( points ) )
     .attr( 'id', 'groupText' )
     .attr( 'class', 'line-text' )
     .attr( 'd', groupTextLine )
-    .attr( 'transform', 'translate(' + width / 2 + ', ' + height / 2 + ')' );
+    .attr( 'transform', 'translate(' + centroid.x + ', ' + centroid.y + ')' );
 
 svg.append( 'text' )
   .append( 'textPath' )
@@ -175,28 +275,26 @@ svg.append( 'text' )
 svg.append( 'use' )
   .attr( 'xlink:href', '#groupText' );
 
-// Subgroups
-
-svg.append( 'path' )
-  .datum( d3.range( points ) )
-    .attr( 'class', 'line' )
-    .attr( 'd', subgroupsLine )
-    .attr( 'transform', 'translate(' + width / 2 + ', ' + height / 2 + ')' );
-
 // Characters
 
 svg.append( 'path' )
   .datum( d3.range( points ) )
     .attr( 'class', 'line' )
-    .attr( 'd', charactersLine )
-    .attr( 'transform', 'translate(' + width / 2 + ', ' + height / 2 + ')' );
+    .attr( 'd', charactersLine1 )
+    .attr( 'transform', 'translate(' + centroid.x + ', ' + centroid.y + ')' );
+
+svg.append( 'path' )
+  .datum( d3.range( points ) )
+    .attr( 'class', 'line' )
+    .attr( 'd', charactersLine2 )
+    .attr( 'transform', 'translate(' + centroid.x + ', ' + centroid.y + ')' );
 
 svg.append( 'path' )
   .datum( d3.range( points ) )
     .attr( 'id', 'characterText' )
     .attr( 'class', 'line-text' )
     .attr( 'd', characterTextLine )
-    .attr( 'transform', 'translate(' + width / 2 + ', ' + height / 2 + ')' );
+    .attr( 'transform', 'translate(' + centroid.x + ', ' + centroid.y + ')' );
 
 svg.append( 'text' )
   .append( 'textPath' )
@@ -214,15 +312,39 @@ svg.append( 'use' )
 svg.append( 'path' )
   .datum( d3.range( points ) )
     .attr( 'class', 'line' )
-    .attr( 'd', scenesLine )
-    .attr( 'transform', 'translate(' + width / 2 + ', ' + height / 2 + ')' );
+    .attr( 'd', scenesLine1 )
+    .attr( 'transform', 'translate(' + centroid.x + ', ' + centroid.y + ')' );
+
+svg.append( 'path' )
+  .datum( d3.range( points ) )
+    .attr( 'class', 'line' )
+    .attr( 'd', scenesLine2 )
+    .attr( 'transform', 'translate(' + centroid.x + ', ' + centroid.y + ')' );
+
+svg.append( 'path' )
+  .datum( d3.range( points ) )
+    .attr( 'class', 'line' )
+    .attr( 'd', scenesLine3 )
+    .attr( 'transform', 'translate(' + centroid.x + ', ' + centroid.y + ')' );
+
+svg.append( 'path' )
+  .datum( d3.range( points ) )
+    .attr( 'class', 'line' )
+    .attr( 'd', scenesLine4 )
+    .attr( 'transform', 'translate(' + centroid.x + ', ' + centroid.y + ')' );
+
+svg.append( 'path' )
+  .datum( d3.range( points ) )
+    .attr( 'class', 'line' )
+    .attr( 'd', scenesLine5 )
+    .attr( 'transform', 'translate(' + centroid.x + ', ' + centroid.y + ')' );
 
 svg.append( 'path' )
   .datum( d3.range( points ) )
     .attr( 'id', 'sceneText' )
     .attr( 'class', 'line-text' )
     .attr( 'd', sceneTextLine )
-    .attr( 'transform', 'translate(' + width / 2 + ', ' + height / 2 + ')' );
+    .attr( 'transform', 'translate(' + centroid.x + ', ' + centroid.y + ')' );
 
 svg.append( 'text' )
   .append( 'textPath' )
@@ -234,6 +356,12 @@ svg.append( 'text' )
 
 svg.append( 'use' )
   .attr( 'xlink:href', '#sceneText' );
+
+// Tooltip
+
+var tooltip = d3.select( 'body' ).append( 'div' )
+  .attr( 'class', 'tooltip' )
+  .text( '' );
 
 function draw_frameworks( frameworks ) {
   
@@ -249,33 +377,132 @@ function draw_frameworks( frameworks ) {
     .data( frameworks )
     .enter().append( 'circle' )
       .attr( 'class', 'framework' )
-      .attr( 'cx', d => ( frameworksRadius + d.h ) * Math.cos( frameworksPos( d.framework ) * Math.PI * 2 - Math.PI / 2 ) )
-      .attr( 'cy', d => ( frameworksRadius + d.h ) * Math.sin( frameworksPos( d.framework ) * Math.PI * 2 - Math.PI / 2 ) )
-      .attr( 'r',  3 )
+      .attr( 'cx', d => frameworksRadius * Math.cos( frameworksPos( d.framework ) * Math.PI * 2 - Math.PI / 2 ) )
+      .attr( 'cy', d => frameworksRadius * Math.sin( frameworksPos( d.framework ) * Math.PI * 2 - Math.PI / 2 ) )
+      .attr( 'r',  1 )
       .attr( 'fill', '#fcfff5' )
-      .attr( 'transform', 'translate(' + width / 2 + ', ' + height / 2 + ')' );
+      .attr( 'transform', 'translate(' + centroid.x+ ', ' + centroid.y + ')' );
 
 }
 
 function draw_groups( groups ) {
-  
-  groupsPos
-    .domain( groups.map( d => d.group ) );
 
-  svg.selectAll( 'circle.group' )
+  console.log( groups );
+
+  var datar = d3.range( 0, 9, 1 ).map( c => {
+    return {
+      x: c,
+      y: d3.randomInt( 0, 2 )()
+    };
+  } );
+
+  var x = d3.scaleLinear()
+    .domain([d3.min(datar, d => d.x), d3.max(datar, d => d.x)])
+    .range([0, 2 * Math.PI]);
+
+  var y1 = d3.scaleLinear()
+    .domain( [ d3.min( datar, d => d.y ), d3.max( datar, d => d.y ) ] )
+    .range( [ 10, 12 ] );
+
+  var y2 = d3.scaleLinear()
+    .domain( [ d3.min( datar, d => d.y ), d3.max( datar, d => d.y ) ] )
+    .range( [ 20, 23 ] );
+
+  var y3 = d3.scaleLinear()
+    .domain( [ d3.min( datar, d => d.y ), d3.max( datar, d => d.y ) ] )
+    .range( [ 40, 45 ] );
+
+  var line = d3.lineRadial()
+    .curve( d3.curveLinearClosed )
+    .angle( d => x( d.x ) );
+
+  groupsPos1
+    .domain( groups.filter( d => +d.arc === 1 ).map( d => d.id ) );
+
+  groupsPos2
+    .domain( groups.filter( d => +d.arc === 2 ).map( d => d.id ) );
+
+  groupsPos3
+    .domain( groups.filter( d => +d.arc === 3 ).map( d => d.id ) );
+
+  groups.map( s => {
+    if ( +s.arc === 1 ) {
+      s.h = groupsRadius1 + d3.randomInt( -10, 10 )();
+      //s.r = y1;
+      s.scale = groupsPos1;
+    } else if ( +s.arc === 2 ) {
+      s.h = groupsRadius2 + d3.randomInt( -10, 10 )();
+      //s.r = y2;
+      s.scale = groupsPos2;
+    } else if ( +s.arc === 3 ) {
+      s.h = groupsRadius3 + d3.randomInt( -10, 10 )();
+      //s.r = y3;
+      s.scale = groupsPos3;
+    }
+    return s;
+  } );
+
+  groups.map( s => {
+    if ( +s.size <= 2 ) {
+      s.r = y1;
+    } else if ( +s.size <= 5 ) {
+      s.r = y2;
+    } else if ( +s.size <= 11 ) {
+      s.r = y3;
+    }
+    return s;
+  } );
+
+  /*svg.selectAll( 'circle.group' )
     .data( groups )
     .enter().append( 'circle' )
       .attr( 'id', d => d.group )
       .attr( 'class', 'group' )
-      .attr( 'cx', d => groupsRadius * Math.cos( groupsPos( d.group ) * Math.PI * 2 - Math.PI / 2 ) )
-      .attr( 'cy', d => groupsRadius * Math.sin( groupsPos( d.group ) * Math.PI * 2 - Math.PI / 2 ) )
-      .attr( 'r',  3 )
+      .attr( 'cx', d => d.h * Math.cos( d.scale( d.id ) * Math.PI * 2 - Math.PI / 2 ) )
+      .attr( 'cy', d => d.h * Math.sin( d.scale( d.id ) * Math.PI * 2 - Math.PI / 2 ) )
+      .attr( 'r', d => groupsSize( d.size ) )
+      .attr( 'stroke', '#0dd169' )
       .attr( 'fill', '#0dd169' )
-      .attr( 'transform', 'translate(' + width / 2 + ', ' + height / 2 + ')' );
+      .style( 'fill-opacity', .03 )
+      .attr( 'stroke-width', 1 )
+      .attr( 'transform', 'translate(' + centroid.x + ', ' + centroid.y + ')' );*/
+
+  svg.selectAll( 'path.group' )
+    .data( groups )
+    .enter().append( 'path' )
+      .attr( 'id', d => 'group_' + d.id )
+      .attr( 'class', 'group' )
+      .attr( 'stroke', '#0dd169' )
+      .attr( 'fill', '#0dd169' )
+      .style( 'fill-opacity', .03 )
+      .attr( 'stroke-width', .5 )
+      .attr( 'active', false )
+      .attr( 'd', a => line.radius( d => a.r( d.y ) )( datar ) )
+      .attr( 'transform', d => 'translate(' + d.h * Math.cos( d.scale( d.id ) * Math.PI * 2 - Math.PI / 2 ) + ', ' + d.h * Math.sin( d.scale( d.id ) * Math.PI * 2 - Math.PI / 2 ) + ')' 
+                              + 'translate(' + centroid.x + ', ' + centroid.y + ')' )
+      .on( 'click', function( datum ) {
+        var elem = d3.select( this );
+        if( elem.attr( 'active' ) == "true" ) {
+          elem.attr( 'active', false ).style( 'fill-opacity', .03 );
+        } else {
+          elem.attr( 'active', true ).style( 'fill-opacity', .4 );
+        }
+      } )
+      .on( 'mouseover', function( datum ) {
+        return tooltip
+          .style( 'visibility', 'visible' )
+          .html( '<span class="group-tooltip">' + datum.acronym + '</span>' );
+      } )
+      .on( 'mousemove', function() {
+        return tooltip.style( 'top', ( event.pageY - 15 ) + 'px' ).style( 'left', ( event.pageX + 15 ) + 'px' );
+      } )
+      .on( 'mouseout', function() {
+        return tooltip.style( 'visibility', 'hidden' );
+      } );
 
 }
 
-function draw_subgroups( subgroups ) {
+/*function draw_subgroups( subgroups ) {
   
   subgroupsPos
     .domain( subgroups.map( d => d.subgroup ) );
@@ -291,12 +518,12 @@ function draw_subgroups( subgroups ) {
       .attr( 'fill', '#0dd169' )
       .attr( 'transform', 'translate(' + width / 2 + ', ' + height / 2 + ')' );
 
-}
+}*/
 
 function draw_characters( characters ) {
   
   characters.map( c => {
-    c.h = d3.randomInt( -60, 60 )();
+    c.h = d3.randomInt( -30, 30 )();
     return c;
   } );
 
@@ -308,42 +535,122 @@ function draw_characters( characters ) {
     .enter().append( 'circle' )
       .attr( 'id', d => d.subgroup )
       .attr( 'class', 'character' )
-      .attr( 'cx', d => ( charactersRadius + d.h ) * Math.cos( charactersPos( d.character ) * Math.PI * 2 - Math.PI / 2 ) )
-      .attr( 'cy', d => ( charactersRadius + d.h ) * Math.sin( charactersPos( d.character ) * Math.PI * 2 - Math.PI / 2 ) )
-      .attr( 'r',  3 )
+      .attr( 'cx', d => ( charactersRadius2 + d.h ) * Math.cos( charactersPos( d.character ) * Math.PI * 2 - Math.PI / 2 ) )
+      .attr( 'cy', d => ( charactersRadius2 + d.h ) * Math.sin( charactersPos( d.character ) * Math.PI * 2 - Math.PI / 2 ) )
+      .attr( 'r',  1 )
       .attr( 'fill', '#FEE838' )
-      .attr( 'transform', 'translate(' + width / 2 + ', ' + height / 2 + ')' );
+      .attr( 'transform', 'translate(' + centroid.x + ', ' + centroid.y + ')' );
 
 }
 
 function draw_scenes( scenes ) {
-  
-  console.log( scenes.map( s => {
-    s.h = d3.randomInt( -160, 160 )();
+
+  var datar = d3.range( 0, points, 1 ).map( c => {
+    return {
+      x: c,
+      y: d3.randomInt( 0, 10 )()
+    };
+  } );
+
+  var x = d3.scaleLinear()
+    .domain([d3.min(datar, d => d.x), d3.max(datar, d => d.x)])
+    .range([0, 2 * Math.PI]);
+
+  var y1 = d3.scaleLinear()
+    .domain( [ d3.min( datar, d => d.y ), d3.max( datar, d => d.y ) ] )
+    .range( [ 50, 56 ] );
+
+  var y2 = d3.scaleLinear()
+    .domain( [ d3.min( datar, d => d.y ), d3.max( datar, d => d.y ) ] )
+    .range( [ 40, 45 ] );
+
+  var y3 = d3.scaleLinear()
+    .domain( [ d3.min( datar, d => d.y ), d3.max( datar, d => d.y ) ] )
+    .range( [ 30, 34 ] );
+
+  var y4 = d3.scaleLinear()
+    .domain( [ d3.min( datar, d => d.y ), d3.max( datar, d => d.y ) ] )
+    .range( [ 20, 23 ] );
+
+  var y5 = d3.scaleLinear()
+    .domain( [ d3.min( datar, d => d.y ), d3.max( datar, d => d.y ) ] )
+    .range( [ 10, 12 ] );
+
+  var line = d3.lineRadial()
+    .curve( d3.curveLinearClosed )
+    .angle( d => x( d.x ) );
+
+  scenesPos1
+    .domain( scenes.filter( d => d.size == 5 ).map( d => d.id ) );
+
+  scenesPos2
+    .domain( scenes.filter( d => d.size == 4 ).map( d => d.id ) );
+
+  scenesPos3
+    .domain( scenes.filter( d => d.size == 3 ).map( d => d.id ) );
+
+  scenesPos4
+    .domain( scenes.filter( d => d.size == 2 ).map( d => d.id ) );
+
+  scenesPos5
+    .domain( scenes.filter( d => d.size == 1 ).map( d => d.id ) );
+
+  scenes.map( s => {
+    if (s.size == 5 ) {
+      s.h = scenesRadius1 + d3.randomInt( -10, 10 )();
+      s.r = y1;
+      s.scale = scenesPos1;
+    } else if (s.size == 4 ) {
+      s.h = scenesRadius2 + d3.randomInt( -20, 20 )();
+      s.r = y2;
+      s.scale = scenesPos2;
+    } else if (s.size == 3 ) {
+      s.h = scenesRadius3 + d3.randomInt( -30, 30 )();
+      s.r = y3;
+      s.scale = scenesPos3;
+    } else if (s.size == 2 ) {
+      s.h = scenesRadius4 + d3.randomInt( -40, 40 )();
+      s.r = y4;
+      s.scale = scenesPos4;
+    } else if (s.size == 1 ) {
+      s.h = scenesRadius5 + d3.randomInt( -50, 50 )();
+      s.r = y5;
+      s.scale = scenesPos5;
+    }
     return s;
-  } ) );
-
-  scenesPos
-    .domain( scenes.map( d => d.scene ) );
-
-  /*svg.selectAll( 'circle.scene' )
-    .data( scenes )
-    .enter().append( 'circle' )
-      .attr( 'id', d => d.scene )
-      .attr( 'class', 'scene' )
-      .attr( 'cx', d => ( scenesRadius + d.h ) * Math.cos( scenesPos( d.scene ) * Math.PI * 2 - Math.PI / 2 ) )
-      .attr( 'cy', d => ( scenesRadius + d.h ) * Math.sin( scenesPos( d.scene ) * Math.PI * 2 - Math.PI / 2 ) )
-      .attr( 'r',  3 )
-      .attr( 'fill', '#b0ebe8' )
-      .attr( 'transform', 'translate(' + width / 2 + ', ' + height / 2 + ')' );*/
+  } );
 
   svg.selectAll( 'path.scene' )
     .data( scenes )
     .enter().append( 'path' )
-      .attr( 'id', d => d.scene )
+      .attr( 'id', d => 'scene_' + d.id )
       .attr( 'class', 'scene' )
-      .attr( 'transform', d => `translate(${ width / 2 + ( scenesRadius + d.h ) * Math.cos( scenesPos( d.scene ) * Math.PI * 2 - Math.PI / 2 )},${height / 2 + ( scenesRadius + d.h ) * Math.sin( scenesPos( d.scene ) * Math.PI * 2 - Math.PI / 2 )})scale(0.025)` )
-      .attr( 'fill', d => '#B0EBE8' )
-      .attr( 'd', 'M410.5,281Q442,312,445,353Q448,394,368,348Q288,302,285.5,327.5Q283,353,266.5,337.5Q250,322,217.5,386Q185,450,156.5,433.5Q128,417,107,393Q86,369,135.5,320Q185,271,165,260.5Q145,250,113.5,222.5Q82,195,124,192Q166,189,148.5,137.5Q131,86,171,107.5Q211,129,230.5,99.5Q250,70,268,105Q286,140,311.5,135.5Q337,131,334,161Q331,191,342,203.5Q353,216,366,233Q379,250,410.5,281Z');
+      .attr( 'stroke', '#b0ebe8' )
+      .attr( 'fill', '#b0ebe8' )
+      .style( 'fill-opacity', .03 )
+      .attr( 'stroke-width', .5 )
+      .attr( 'active', false )
+      .attr( 'd', a => line.radius( d => a.r( d.y ) )( datar ) )
+      .attr( 'transform', d => 'translate(' + d.h * Math.cos( d.scale( d.id ) * Math.PI * 2 - Math.PI / 2 ) + ', ' + d.h * Math.sin( d.scale( d.id ) * Math.PI * 2 - Math.PI / 2 ) + ')' 
+                              + 'translate(' + centroid.x + ', ' + centroid.y + ')' )
+      .on( 'click', function( datum ) {
+        var elem = d3.select( this );
+        if( elem.attr( 'active' ) == "true" ) {
+          elem.attr( 'active', false ).style( 'fill-opacity', .03 );
+        } else {
+          elem.attr( 'active', true ).style( 'fill-opacity', .4 );
+        }
+      } )
+      .on( 'mouseover', function( datum ) {
+        return tooltip
+          .style( 'visibility', 'visible' )
+          .html( '<span class="scene-tooltip">' + datum.scene + '</span>' );
+      } )
+      .on( 'mousemove', function() {
+        return tooltip.style( 'top', ( event.pageY - 15 ) + 'px' ).style( 'left', ( event.pageX + 15 ) + 'px' );
+      } )
+      .on( 'mouseout', function() {
+        return tooltip.style( 'visibility', 'hidden' );
+      } );
 
 }

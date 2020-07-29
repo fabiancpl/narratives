@@ -3,6 +3,9 @@
   <head>
     <title>Narrativas de excombatientes</title>
 
+    <!-- Fonts-->
+    <link href='https://fonts.googleapis.com/css?family=Heebo' rel='stylesheet'>
+
     <!-- Fontawesome -->
     <script src="https://kit.fontawesome.com/99775cdb50.js" crossorigin="anonymous"></script>
 
@@ -13,8 +16,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.16.0/d3.min.js"></script>
     <script src="https://d3js.org/d3-random.v2.min.js"></script>
 
-    <!-- Fonts-->
-    <link href='https://fonts.googleapis.com/css?family=Heebo' rel='stylesheet'>
+    <!-- Player -->
+    <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="./css/progres-bar.css">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./css/main.css">
@@ -31,10 +35,53 @@
       </div>
     </div>
     <div id="vis"></div>
+    <div id="mydiv">
+      <div id="mydivheader">
+        <div>
+          <span>MONTES DE MARÍA</span>
+        </div>
+        <div class="example">
+          <audio crossorigin>
+            <source src="./audios/ya0o9S8LDt4J.128.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+        <div class="mediPlayer">
+          <audio class="listen" preload="none" data-size="35" src="./audios/ya0o9S8LDt4J.128.mp3"></audio>
+        </div>
+      </div>
+    </div>
 
     <!-- Custom scripts -->
     <script src="./js/menu.js"></script>
-    <script src="./js/main2.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="./js/panel.js"></script>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="./js/player.js"></script>
+
+    <script>
+      $( document ).ready( function () {
+          $( '.mediPlayer' ).mediaPlayer();
+      } );
+    </script>
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push( [ '_setAccount', 'UA-36251023-1' ] );
+      _gaq.push( [ '_setDomainName', 'jqueryscript.net' ] );
+      _gaq.push( [ '_trackPageview' ] );
+
+      ( function() {
+        var ga = document.createElement( 'script' )
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = ( 'https:' == document.location.protocol ? 'https://ssl' : 'http://www' ) + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName( 'script' )[ 0 ];
+        s.parentNode.insertBefore( ga, s );
+      } )();
+
+    </script>
 
   </body>
 </html>

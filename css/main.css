@@ -17,7 +17,7 @@ body {
 #hover-space {
   background-color: #3F403E;
   overflow: hidden;
-  height: 35px;
+  height: 30px;
   color: #FBFEF4;
   font-size: 0.7rem;
   letter-spacing: 0.2rem;
@@ -28,25 +28,56 @@ body {
 .line {
   fill: none;
   stroke: none;
-  stroke-width: 1.5px;
-}
-
-.line2 {
-  fill: none;
-  stroke: red;
-  stroke-width: 1.5px;
+  stroke-width: 1px;
 }
 
 .line-text {
   fill: none;
   stroke: none;
-  stroke-width: 1.5px;
+  stroke-width: 1px;
 }
 
-.scene-text {
+.tooltip {
+  position: absolute;
+  z-index: 10;
+  visibility: hidden;
+}
+
+.scene-tooltip {
   color: #b0ebe8;
 }
 
-.group-text {
+.group-tooltip {
   color: #0dd169;
+}
+
+/* Draggable panel */
+
+#mydiv {
+  position: absolute;
+  z-index: 20;
+  text-align: left;
+  min-width: 200px;
+  min-height: 65px;
+  top: 100px;
+  left: 100px;
+}
+
+#mydivheader {
+  padding: 3px 10px;
+  font-size: 0.7rem;
+  letter-spacing: 0.1rem;
+  cursor: move;
+  z-index: 20;
+  background-color: #b0ebe8;
+  color: #3F403E;
+  border-radius: 2px;
+  min-height: 65px;
+}
+
+/* Player */
+
+.mediPlayer {
+  float: left;
+  margin: 2px;
 }
