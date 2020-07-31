@@ -1,35 +1,35 @@
-id,character
-1,Luis Fernando Quijano
-2,Idelfonso Henao Salazar
-3,Francisco Caraballo
-4,Raquel Vergara Álvarez
-5,Álvaro Villarraga Sarmiento
-6,Nodier Giraldo Giraldo
-7,Óscar José Ospino
-8,Edwar Cobos Téllez
-9,Freddy Rendón Herrera
-10,Iván Roberto Duque Gaviria
-11,Rodrigo Pérez Alzate
-12,Óscar Leonardo Montealegre Beltrán
-13,José Eleazar Moreno Sánchez
-14,Arlex Arango
-15,Manuel de Jesús Pirabán
-16,Jorge Iván Laverde Zapata
-17,Alonso Ojeda Awad
-18,Medardo Correa Arboleda
-19,Carlos Arturo Velandia Jagua
-20,Antonio López
-21,Gabriel Barrios
-22,José Matias Ortiz Sarmiento
-23,Enrique Flórez
-24,Gloria Quiceno
-25,Vera Grabe
-26,Álvaro Jimenez Millán
-27,Luz Amparo Jiménez
-28,Fabio Mariño Vargas
-29,Fernando Hernández Valencia
-30,Luis Eduardo Celis Méndez
-31,María Aureliana Buendia
-32,Rodrigo Londoño Echeverri
-33,Gabriel Ángel
-34,Griselda Lobo / Sandra Ramírez
+id,character,group
+1,Luis Fernando Quijano,EPL
+20,Antonio López,ELN
+2,Ildefonso Henao Salazar,EPL
+4,Raquel Vergara Álvarez,EPL
+18,Medardo Correa Arboleda,ELN-REPLANTEAMIENTO
+23,Enrique Flórez,PRT
+31,María Aureliana Buendía,FARC-EP
+34,Griselda Lobo / Sandra Ramírez,FARC-EP
+14,Arlex Arango,AUC
+15,Manuel de Jesús Pirabán,AUC
+16,Jorge Iván Laverde Zapata,AUC
+17,Alonso Ojeda Awad,ELN-REPLANTEAMIENTO
+27,Luz Amparo Jiménez,M-19
+11,Rodrigo Pérez Alzate,AUC
+12,Óscar Leonardo Montealegre Beltrán,AUC
+19,Carlos Arturo Velandia Jagua,ELN
+24,Gloria Quiceno,M-19
+26,Álvaro Jiménez Millán,M-19
+32,Rodrigo Londoño Echeverri,FARC-EP
+33,Gabriel Ángel,FARC-EP
+7,Óscar José Ospino,AUC
+21,Gabriel Barrios,PRT
+30,Luis Eduardo Celis Méndez,CRS
+6,Nodier Giraldo Giraldo,AUC
+10,Iván Roberto Duque Gaviria,AUC
+13,José Eleazar Moreno Sánchez,AUC
+25,Vera Grabe,M-19
+28,Fabio Mariño Vargas,M-19
+8,Edward Cobos Téllez,AUC
+9,Freddy Rendón Herrera,AUC
+22,José Matías Ortiz Sarmiento,PRT
+29,Fernando Hernández Valencia,CRS
+3,Francisco Caraballo,EPL
+5,Álvaro Villarraga Sarmiento,EPL

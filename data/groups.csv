@@ -1,9 +1,11 @@
-id,group,acronym,size,arc
-5,Ejercito Popular de Liberación,EPL,5,2
-1,Autodefensas Unidas de Colombia,AUC,11,3
-8,ELN Replanteamiento, ELN Replanteamiento,2,2
-4,Ejercito de Liberación Nacional,ELN,2,2
-7,Partido Revolucionario de Colombia,PRT,2,3
-2,Movimiento 19 de Abril,M-19,5,2
-3,Corriente de Renovación Socialista,CRS,2,1
-6,Fuerzas Armadas Revolucionarias de Colombia - Ejercito del Pueblo,FARC-EP,4,1
+id,group,acronym
+1,Autodefensas Unidas de Colombia,AUC
+2,Movimiento 19 de Abril,M-19
+3,Corriente de Renovación Socialista,CRS
+4,Ejercito de Liberación Nacional,ELN
+5,Ejercito Popular de Liberación,EPL
+6,Fuerzas Armadas Revolucionarias de Colombia - Ejercito del Pueblo,FARC-EP
+7,Partido Revolucionario de Colombia,PTR
+8,ELN Replanteamiento,ELN 
+9,International Center for Transitional Justice,ICTJ
+10,Comisión de la Verdad Colombia,CEV
