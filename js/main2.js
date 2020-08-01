@@ -22,7 +22,7 @@ var tooltip = d3.select( 'body' ).append( 'div' )
 
 d3.select( '#background' )
   .on( 'click', function() {
-    d3.selectAll( '.scene,.group,.character' )
+    d3.selectAll( '.scene,.group,.subgroup,.character' )
       .attr( 'active', false ).style( 'fill-opacity', .05 );
     close_panels();
   } );
@@ -118,11 +118,17 @@ function show_panel( element_id, entity ) {
     .append( 'span' )
     .html( '<b>' + element[ entity ].toUpperCase() + '</b>&nbsp;&nbsp;' );
 
-  if ( entity === 'character' )
+  if ( entity === 'character' ) {
     body.append( 'div' )
       .append( 'span' )
       .style( 'font-size', '0.7rem' )
       .html( element[ 'group' ] + '&nbsp;&nbsp;' );
+  } else if ( entity === 'subgroup' )
+    body.append( 'div' )
+      .append( 'span' )
+      .style( 'font-size', '0.7rem' )
+      .html( 'Autodefensas Unidas de Colombia&nbsp;&nbsp;' );
+
   
   // Drawing audio
   if ( element[ 'audio' ] !== undefined && element[ 'audio' ] !== '' ) {
