@@ -1,8 +1,9 @@
-id,subgroup,group
+id,subgroup,size
 1,Bloque Resistencia Tayrona,1
 2,Bloque Norte,1
 3,Bloque Montes de María,1
 4,Bloque Elmer Cárdenas,1
 5,Autodefensas Campesinas del Magdalena Medio,1
-6,Bloque Central Bolivar de las AUC,1
-7,Bloque Centauros - Héroes del Llano de las AUC,1
+6,Bloque Central Bolivar de las AUC,2
+7,Bloque Centauros - Héroes del Llano de las AUC,3
+8,Bloque Catatumbo de las AUC,1

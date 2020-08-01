@@ -3,11 +3,14 @@ var i = 0;
 
 var scenes,
   groups,
+  subgroups,
   characters;
 
 d3.csv( './data/scenes.csv' ).then( data => scenes = data );
 
 d3.csv( './data/groups.csv' ).then( data => groups = data );
+
+d3.csv( './data/subgroups.csv' ).then( data => subgroups = data );
 
 d3.csv( './data/characters.csv' ).then( data => characters = data );
 
@@ -24,7 +27,7 @@ d3.select( '#background' )
     close_panels();
   } );
 
-d3.selectAll( '.scene,.group,.character' )
+d3.selectAll( '.scene,.group,.subgroup,.character' )
   .on( 'click', function() {
     var elem = d3.select( this );
     if ( elem.attr( 'active' ) == 'true' ) {
@@ -37,6 +40,8 @@ d3.selectAll( '.scene,.group,.character' )
       show_panel( elem.attr( 'id' ), 'scene' );
     } else if ( elem.attr( 'class' ) === 'group' ) {
       show_panel( elem.attr( 'id' ), 'group' );
+    } else if ( elem.attr( 'class' ) === 'subgroup' ) {
+      show_panel( elem.attr( 'id' ), 'subgroup' );
     } else if ( elem.attr( 'class' ) === 'character' ) {
       show_panel( elem.attr( 'id' ), 'character' );
     }
@@ -57,6 +62,8 @@ d3.selectAll( '.scene,.group,.character' )
       text = scenes.filter( d => d[ 'id' ] === id )[ 0 ][ 'scene' ];
     } else if ( elem.attr( 'class' ) === 'group' ) {
       text = groups.filter( d => d[ 'id' ] === id )[ 0 ][ 'acronym' ];
+    } else if ( elem.attr( 'class' ) === 'subgroup' ) {
+      text = subgroups.filter( d => d[ 'id' ] === id )[ 0 ][ 'subgroup' ];
     } else {
       text = characters.filter( d => d[ 'id' ] === id )[ 0 ][ 'character' ];
     }
@@ -82,6 +89,9 @@ function show_panel( element_id, entity ) {
   } else if ( entity === 'group' ) {
     element = groups.filter( d => d[ 'id' ] === element_id )[ 0 ];
     color = '#f20505';
+  } else if ( entity === 'subgroup' ) {
+    element = subgroups.filter( d => d[ 'id' ] === element_id )[ 0 ];
+    color = '#f20505';
   } else if ( entity === 'character' ) {
     element = characters.filter( d => d[ 'id' ] === element_id )[ 0 ];
     color = '#f20505';
@@ -106,7 +116,13 @@ function show_panel( element_id, entity ) {
 
   body.append( 'div' )
     .append( 'span' )
-    .html( '<b> ' + element[ entity ].toUpperCase() + '</b>&nbsp;&nbsp;' );
+    .html( '<b>' + element[ entity ].toUpperCase() + '</b>&nbsp;&nbsp;' );
+
+  if ( entity === 'character' )
+    body.append( 'div' )
+      .append( 'span' )
+      .style( 'font-size', '0.7rem' )
+      .html( element[ 'group' ] + '&nbsp;&nbsp;' );
   
   // Drawing audio
   if ( element[ 'audio' ] !== undefined && element[ 'audio' ] !== '' ) {

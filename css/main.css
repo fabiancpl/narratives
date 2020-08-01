@@ -41,6 +41,14 @@ body {
   stroke-miterlimit:10;
 }
 
+.subgroup {
+  fill: #f20505;
+  fill-opacity: 0.05;
+  stroke: #f20505;
+  stroke-width: 1px;
+  stroke-miterlimit:10;
+}
+
 .character {
   fill: #f20505;
   fill-opacity: 0.05;
@@ -75,6 +83,10 @@ body {
 }
 
 .group-tooltip {
+  color: #f20505;
+}
+
+.subgroup-tooltip {
   color: #f20505;
 }
 
