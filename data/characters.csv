@@ -1,35 +1,35 @@
-id,character,group
-1,Luis Fernando Quijano,EPL
-20,Antonio López,ELN
-2,Ildefonso Henao Salazar,EPL
-4,Raquel Vergara Álvarez,EPL
-18,Medardo Correa Arboleda,ELN-REPLANTEAMIENTO
-23,Enrique Flórez,PRT
-31,María Aureliana Buendía,FARC-EP
-34,Griselda Lobo / Sandra Ramírez,FARC-EP
-14,Arlex Arango,AUC
-15,Manuel de Jesús Pirabán,AUC
-16,Jorge Iván Laverde Zapata,AUC
-17,Alonso Ojeda Awad,ELN-REPLANTEAMIENTO
-27,Luz Amparo Jiménez,M-19
-11,Rodrigo Pérez Alzate,AUC
-12,Óscar Leonardo Montealegre Beltrán,AUC
-19,Carlos Arturo Velandia Jagua,ELN
-24,Gloria Quiceno,M-19
-26,Álvaro Jiménez Millán,M-19
-32,Rodrigo Londoño Echeverri,FARC-EP
-33,Gabriel Ángel,FARC-EP
-7,Óscar José Ospino,AUC
-21,Gabriel Barrios,PRT
-30,Luis Eduardo Celis Méndez,CRS
-6,Nodier Giraldo Giraldo,AUC
-10,Iván Roberto Duque Gaviria,AUC
-13,José Eleazar Moreno Sánchez,AUC
-25,Vera Grabe,M-19
-28,Fabio Mariño Vargas,M-19
-8,Edward Cobos Téllez,AUC
-9,Freddy Rendón Herrera,AUC
-22,José Matías Ortiz Sarmiento,PRT
-29,Fernando Hernández Valencia,CRS
-3,Francisco Caraballo,EPL
-5,Álvaro Villarraga Sarmiento,EPL
+id,character,group,audio
+1,Luis Fernando Quijano,EPL,
+20,Antonio López,ELN,
+2,Ildefonso Henao Salazar,EPL,Preludio_Soy_1.Ildefonso_Henao_Salazar.mp3
+4,Raquel Vergara Álvarez,EPL,
+18,Medardo Correa Arboleda,ELN-REPLANTEAMIENTO,
+23,Enrique Flórez,PRT,
+31,María Aureliana Buendía,FARC-EP,
+34,Griselda Lobo / Sandra Ramírez,FARC-EP,
+14,Arlex Arango,AUC,
+15,Manuel de Jesús Pirabán,AUC,
+16,Jorge Iván Laverde Zapata,AUC,
+17,Alonso Ojeda Awad,ELN-REPLANTEAMIENTO,
+27,Luz Amparo Jiménez,M-19,
+11,Rodrigo Pérez Alzate,AUC,
+12,Óscar Leonardo Montealegre Beltrán,AUC,
+19,Carlos Arturo Velandia Jagua,ELN,
+24,Gloria Quiceno,M-19,
+26,Álvaro Jiménez Millán,M-19,
+32,Rodrigo Londoño Echeverri,FARC-EP,
+33,Gabriel Ángel,FARC-EP,
+7,Óscar José Ospino,AUC,
+21,Gabriel Barrios,PRT,
+30,Luis Eduardo Celis Méndez,CRS,
+6,Nodier Giraldo Giraldo,AUC,
+10,Iván Roberto Duque Gaviria,AUC,
+13,José Eleazar Moreno Sánchez,AUC,
+25,Vera Grabe,M-19,
+28,Fabio Mariño Vargas,M-19,
+8,Edward Cobos Téllez,AUC,
+9,Freddy Rendón Herrera,AUC,
+22,José Matías Ortiz Sarmiento,PRT,
+29,Fernando Hernández Valencia,CRS,
+3,Francisco Caraballo,EPL,
+5,Álvaro Villarraga Sarmiento,EPL,
