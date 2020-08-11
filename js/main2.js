@@ -147,7 +147,7 @@ function show_panel( element_id, entity ) {
   panel
     .transition()
     .duration( 1000 )
-    .style( 'opacity', .65 );
+    .style( 'opacity', .75 );
 
   // Dragging panel
   panel
