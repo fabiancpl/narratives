@@ -27,34 +27,43 @@ body {
 
 .scene {
   fill: #0D0D0D;
-  fill-opacity: 0.05;
+  fill-opacity: 0;
   stroke:#0D0D0D;
-  stroke-width: 1px;
+  stroke-opacity: .2;
+  stroke-width: 2px;
   stroke-miterlimit:10;
 }
 
 .group {
   fill: #f20505;
-  fill-opacity: 0.05;
+  fill-opacity: 0;
   stroke: #f20505;
-  stroke-width: 1px;
+  stroke-opacity: .2;
+  stroke-width: 2px;
   stroke-miterlimit:10;
 }
 
 .subgroup {
   fill: #f20505;
-  fill-opacity: 0.05;
+  fill-opacity: 0;
   stroke: #f20505;
-  stroke-width: 1px;
+  stroke-opacity: .2;
+  stroke-width: 2px;
   stroke-miterlimit:10;
 }
 
 .character {
   fill: #f20505;
-  fill-opacity: 0.05;
+  fill-opacity: 0;
   stroke: #f20505;
-  stroke-width: 1px;
+  stroke-opacity: .2;
+  stroke-width: 2px;
   stroke-miterlimit:10;
+}
+
+.character-name{
+  fill: #0D0D0D;
+  font-family: 'Heebo-SemiBold';
 }
 
 .framework {
@@ -80,18 +89,22 @@ body {
 
 .scene-tooltip {
   color: #0D0D0D;
+  opacity: .6;
 }
 
 .group-tooltip {
   color: #f20505;
+  opacity: .6;
 }
 
 .subgroup-tooltip {
   color: #f20505;
+  opacity: .6;
 }
 
 .character-tooltip {
   color: #f20505;
+  opacity: .6;
 }
 
 /* Draggable panel */
