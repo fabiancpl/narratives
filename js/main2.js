@@ -25,9 +25,17 @@ d3.select( '#background' )
       .classed( 'active', false )
       .classed( 'scaled', false )
       .attr( 'points', function() {
+        
         var elem = d3.select( this );
-        var scaled_points = geometric.polygonScale( get_points( elem ), .90909 );
-        return scaled_points.join( ' ' );
+
+        // Define the kind of node
+        var entity = get_entity( elem );
+
+        if ( entity !== 'character' ) {
+          var scaled_points = geometric.polygonScale( get_points( elem ), .90909 );
+          return scaled_points.join( ' ' );
+        }
+
       } );
 
     d3.selectAll( '.active-text' )
@@ -37,16 +45,23 @@ d3.select( '#background' )
 
   } );
 
-d3.selectAll( '.scene' )
+/* Scene interactions */
+
+d3.selectAll( '.scene,.group,.subgroup,.character' )
   .on( 'click', function() {
     
     var elem = d3.select( this );
 
+    // Define the kind of node
+    var entity = get_entity( elem );
+
+    // Active the node
     elem
       .classed( 'visited', true )
       .classed( 'active', true );
 
-    d3.select( '#' + elem.attr( 'id' ) + '.scene-name' )
+    // Active the text
+    d3.select( '#' + elem.attr( 'id' ) + '.' + entity + '-name' )
       .classed( 'active-text', true );
 
   } )
@@ -54,40 +69,54 @@ d3.selectAll( '.scene' )
     
     var elem = d3.select( this );
 
+    // Define the kind of node
+    var entity = get_entity( elem );
+
+    // Highlight the node
     elem
       .classed( 'hover', true );
 
-    d3.select( '#' + elem.attr( 'id' ) + '.scene-name' )
+    // Show the text
+    d3.select( '#' + elem.attr( 'id' ) + '.' + entity + '-name' )
       .classed( 'visible-text', true ); 
     
-    if ( !elem.classed( 'scaled' ) ) {
-      var scaled_points = geometric.polygonScale( get_points( elem ), 1.1 );
-      elem
-        .classed( 'scaled', true )
-        .attr( 'points', scaled_points.join( ' ' ) );
-    }
+    // Scale up the node, if it is not previously scaled
+    if ( entity !== 'character' )
+      if ( !elem.classed( 'scaled' ) ) {
+        var scaled_points = geometric.polygonScale( get_points( elem ), 1.1 );
+        elem
+          .classed( 'scaled', true )
+          .attr( 'points', scaled_points.join( ' ' ) );
+      }
 
   } )
   .on( 'mouseout', function() {
     
     var elem = d3.select( this );
 
+    // Define the kind of node
+    var entity = get_entity( elem );
+
+    // Highlight down the node
     elem
       .classed( 'hover', false );
 
-    d3.select( '#' + elem.attr( 'id' ) + '.scene-name' )
+    // Hide the text
+    d3.select( '#' + elem.attr( 'id' ) + '.' + entity + '-name' )
       .classed( 'visible-text', false );
 
-    if ( !elem.classed( 'active' ) ) {
-      var scaled_points = geometric.polygonScale( get_points( elem ), .90909 );
-      elem
-        .classed( 'scaled', false )
-        .attr( 'points', scaled_points.join( ' ' ) );
-    }
+    // Scale down the text, if it is not active
+    if ( entity !== 'character' )
+      if ( !elem.classed( 'active' ) ) {
+        var scaled_points = geometric.polygonScale( get_points( elem ), .90909 );
+        elem
+          .classed( 'scaled', false )
+          .attr( 'points', scaled_points.join( ' ' ) );
+      }
 
   } );
 
-d3.selectAll( '.group,.subgroup,.character' )
+/*d3.selectAll( '' )
   .on( 'click', function() {
     var elem = d3.select( this );
     if ( elem.attr( 'active' ) == 'true' ) {
@@ -153,6 +182,21 @@ d3.selectAll( '.group,.subgroup,.character' )
 
     return tooltip.style( 'visibility', 'hidden' );
   } );
+*/
+
+function get_entity( elem ) {
+  var entity;
+  if ( elem.classed( 'scene' ) ) {
+    entity = 'scene';
+  } else if ( elem.classed( 'group' ) ) {
+    entity = 'group';
+  } else if ( elem.classed( 'subgroup' ) ) {
+    entity = 'subgroup';
+  } else if ( elem.classed( 'character' ) ) {
+    entity = 'character';
+  }
+  return entity
+}
 
 function get_points( elem ) {
   return elem.attr( 'points' ).split( ' ' )

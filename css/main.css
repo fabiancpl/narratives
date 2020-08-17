@@ -25,18 +25,66 @@ body {
 
 /* Vis */
 
+.framework {
+  fill: #f25c69;
+  fill-opacity: 0;
+  stroke: #f25c69;
+  stroke-opacity: .2;
+  stroke-width: 2px;
+  stroke-miterlimit: 10;
+}
+
 .scene {
   fill: #0D0D0D;
   fill-opacity: 0;
   stroke:#0D0D0D;
   stroke-opacity: .2;
   stroke-width: 2px;
-  stroke-miterlimit:10;
+  stroke-miterlimit: 10;
 }
 
 .scene-name{
   fill: #0D0D0D;
   fill-opacity: .6;
+  font-family: 'Heebo-SemiBold';
+  visibility: hidden;
+}
+
+.group {
+  fill: #f20505;
+  fill-opacity: 0;
+  stroke: #f20505;
+  stroke-opacity: .2;
+  stroke-width: 2px;
+  stroke-miterlimit: 10;
+}
+
+.group-name{
+  fill: #f20505;
+  font-family: 'Heebo-SemiBold';
+  visibility: hidden;
+}
+
+.subgroup {
+  fill: #f20505;
+  fill-opacity: 0;
+  stroke: #f20505;
+  stroke-opacity: .2;
+  stroke-width: 2px;
+  stroke-miterlimit: 10;
+}
+
+.character {
+  fill: #f20505;
+  fill-opacity: 0;
+  stroke: #f20505;
+  stroke-opacity: .2;
+  stroke-width: 2px;
+  stroke-miterlimit: 10;
+}
+
+.character-name{
+  fill: #0D0D0D;
   font-family: 'Heebo-SemiBold';
   visibility: hidden;
 }
@@ -63,51 +111,6 @@ body {
 .active-text {
   visibility: visible;
   fill-opacity: .9;
-}
-
-.group {
-  fill: #f20505;
-  fill-opacity: 0;
-  stroke: #f20505;
-  stroke-opacity: .2;
-  stroke-width: 2px;
-  stroke-miterlimit:10;
-}
-
-.group-name{
-  fill: #0D0D0D;
-  font-family: 'Heebo-SemiBold';
-}
-
-.subgroup {
-  fill: #f20505;
-  fill-opacity: 0;
-  stroke: #f20505;
-  stroke-opacity: .2;
-  stroke-width: 2px;
-  stroke-miterlimit:10;
-}
-
-.character {
-  fill: #f20505;
-  fill-opacity: 0;
-  stroke: #f20505;
-  stroke-opacity: .2;
-  stroke-width: 2px;
-  stroke-miterlimit:10;
-}
-
-.character-name{
-  fill: #0D0D0D;
-  font-family: 'Heebo-SemiBold';
-}
-
-.framework {
-  fill: #f25c69;
-  fill-opacity: 0.05;
-  stroke: #f25c69;
-  stroke-width: 1px;
-  stroke-miterlimit:10;
 }
 
 .link {
