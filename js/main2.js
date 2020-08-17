@@ -14,20 +14,80 @@ d3.csv( './data/subgroups.csv' ).then( data => subgroups = data );
 
 d3.csv( './data/characters.csv' ).then( data => characters = data );
 
-// Tooltip
-
-var tooltip = d3.select( 'body' ).append( 'div' )
+/*var tooltip = d3.select( 'body' ).append( 'div' )
   .attr( 'class', 'tooltip' )
-  .text( '' );
+  .text( '' );*/
 
 d3.select( '#background' )
   .on( 'click', function() {
-    d3.selectAll( '.scene,.group,.subgroup,.character' )
-      .attr( 'active', false ).style( 'fill-opacity', 0 );
-    close_panels();
+
+    d3.selectAll( '.active' )
+      .classed( 'active', false )
+      .classed( 'scaled', false )
+      .attr( 'points', function() {
+        var elem = d3.select( this );
+        var scaled_points = geometric.polygonScale( get_points( elem ), .90909 );
+        return scaled_points.join( ' ' );
+      } );
+
+    d3.selectAll( '.active-text' )
+      .classed( 'active-text', false );
+
+    //close_panels();
+
   } );
 
-d3.selectAll( '.scene,.group,.subgroup,.character' )
+d3.selectAll( '.scene' )
+  .on( 'click', function() {
+    
+    var elem = d3.select( this );
+
+    elem
+      .classed( 'visited', true )
+      .classed( 'active', true );
+
+    d3.select( '#' + elem.attr( 'id' ) + '.scene-name' )
+      .classed( 'active-text', true );
+
+  } )
+  .on( 'mouseover', function() {
+    
+    var elem = d3.select( this );
+
+    elem
+      .classed( 'hover', true );
+
+    d3.select( '#' + elem.attr( 'id' ) + '.scene-name' )
+      .classed( 'visible-text', true ); 
+    
+    if ( !elem.classed( 'scaled' ) ) {
+      var scaled_points = geometric.polygonScale( get_points( elem ), 1.1 );
+      elem
+        .classed( 'scaled', true )
+        .attr( 'points', scaled_points.join( ' ' ) );
+    }
+
+  } )
+  .on( 'mouseout', function() {
+    
+    var elem = d3.select( this );
+
+    elem
+      .classed( 'hover', false );
+
+    d3.select( '#' + elem.attr( 'id' ) + '.scene-name' )
+      .classed( 'visible-text', false );
+
+    if ( !elem.classed( 'active' ) ) {
+      var scaled_points = geometric.polygonScale( get_points( elem ), .90909 );
+      elem
+        .classed( 'scaled', false )
+        .attr( 'points', scaled_points.join( ' ' ) );
+    }
+
+  } );
+
+d3.selectAll( '.group,.subgroup,.character' )
   .on( 'click', function() {
     var elem = d3.select( this );
     if ( elem.attr( 'active' ) == 'true' ) {
@@ -93,6 +153,12 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
 
     return tooltip.style( 'visibility', 'hidden' );
   } );
+
+function get_points( elem ) {
+  return elem.attr( 'points' ).split( ' ' )
+    .filter( s => s != '' && s != '\n' )
+    .map( s => s.split( ',' ).map( s => +s ) );
+}
 
 function show_panel( element_id, entity ) {
 

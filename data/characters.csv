@@ -1,35 +1,39 @@
-id,character,group,audio
-1,Luis Fernando Quijano,Ejercito Popular de Liberación,
-20,Antonio López,Ejercito de Liberación Nacional,
-2,Ildefonso Henao Salazar,Ejercito Popular de Liberación,Preludio_Soy_1.Ildefonso_Henao_Salazar.mp3
-4,Raquel Vergara Álvarez,Ejercito Popular de Liberación,Preludio_Soy_3.Raquel Vergara Álvarez.mp3
-18,Medardo Correa Arboleda,Ejercito de Liberación Nacional-REjercito Popular de LiberaciónANTEAMIENTO,Preludio_Soy_17.Medardo Correa Arboleda.mp3
-23,Enrique Flórez,Partido Revolucionario de Colombia,
-31,María Aureliana Buendía,Fuerzas Armadas Revolucionarias de Colombia - Ejercito del Pueblo,
-34,Griselda Lobo / Sandra Ramírez,Fuerzas Armadas Revolucionarias de Colombia - Ejercito del Pueblo,
-14,Arlex Arango,Autodefensas Unidas de Colombia,
-15,Manuel de Jesús Pirabán,Autodefensas Unidas de Colombia,Preludio_Soy_14.Manuel de Jesús Pirabán.mp3
-16,Jorge Iván Laverde Zapata,Autodefensas Unidas de Colombia,Preludio_Soy_15.Jorge Iván Laverde Zapata.mp3
-17,Alonso Ojeda Awad,Ejercito de Liberación Nacional-REjercito Popular de LiberaciónANTEAMIENTO,Preludio_Soy_16.Alonso Ojeda Awad.mp3
-27,Luz Amparo Jiménez,Movimiento 19 de Abril,Preludio_Soy_27.Luz Amparo Jiménez.mp3
-11,Rodrigo Pérez Alzate,Autodefensas Unidas de Colombia,
-12,Óscar Leonardo Montealegre Beltrán,Autodefensas Unidas de Colombia,Preludio_Soy_11.Óscar Leonardo Montealegre Beltrán.mp3
-19,Carlos Arturo Velandia Jagua,Ejercito de Liberación Nacional,Preludio_Soy_18.Carlos Arturo Velandia Jagua.mp3
-24,Gloria Quiceno,Movimiento 19 de Abril,Preludio_Soy_24.Gloria Quiceno.mp3
-26,Álvaro Jiménez Millán,Movimiento 19 de Abril,Preludio_Soy_26.Álvaro Jiménez Millán.mp3
-32,Rodrigo Londoño Echeverri,Fuerzas Armadas Revolucionarias de Colombia - Ejercito del Pueblo,
-33,Gabriel Ángel,Fuerzas Armadas Revolucionarias de Colombia - Ejercito del Pueblo,
-7,Óscar José Ospino,Autodefensas Unidas de Colombia,
-21,Gabriel Barrios,Partido Revolucionario de Colombia,
-30,Luis Eduardo Celis Méndez,Corriente de Renovación Socialista,Preludio_Soy_30.Luis Eduardo Celis Méndez.mp3
-6,Nodier Giraldo Giraldo,Autodefensas Unidas de Colombia,Preludio_Soy_5.Nodier Giraldo.mp3
-10,Iván Roberto Duque Gaviria,Autodefensas Unidas de Colombia,Preludio_Soy_9.Iván Roberto Duque Gaviria.mp3
-13,José Eleazar Moreno Sánchez,Autodefensas Unidas de Colombia,Preludio_Soy_12.José Eleazar Moreno Sánchez.mp3
-25,Vera Grabe,Movimiento 19 de Abril,Preludio_Soy_25.Vera Grabe.mp3
-28,Fabio Mariño Vargas,Movimiento 19 de Abril,Preludio_Soy_28.Fabio Mariño Vargas.mp3
-8,Edward Cobos Téllez,Autodefensas Unidas de Colombia,Preludio_Soy_7.Edward Cobos Téllez.mp3
-9,Freddy Rendón Herrera,Autodefensas Unidas de Colombia,
-22,José Matías Ortiz Sarmiento,Partido Revolucionario de Colombia,Preludio_Soy_23.José Matías Ortiz SarmientoJosé Matías Ortiz.mp3
-29,Fernando Hernández Valencia,Corriente de Renovación Socialista,Preludio_Soy_29.Fernando Hernández Valencia.mp3
-3,Francisco Caraballo,Ejercito Popular de Liberación,Preludio_Soy_2.Francisco_Caraballo.mp3
-5,Álvaro Villarraga Sarmiento,Ejercito Popular de Liberación,Preludio_Soy_4.Álvaro Villarraga Sarmiento.mp3
+﻿id,character,group,subgroup
+1,(P-01) Francisco Caraballo,(G-01) EPL,
+2,(P-02) Ildefonso Henao Salazar,(G-01) EPL,
+3,(P-03) Raquel Vergara Álvarez,(G-01) EPL,
+4,(P-04) Álvaro Villarraga Sarmiento,(G-01) EPL,
+5,(P-05) Nodier Giraldo Giraldo,(G-02) AUC,(S-01) Bloque Resistencia Tayrona
+6,(P-06) Óscar José Ospino,(G-02) AUC,(S-02) Bloque Norte
+7,(P-07) Edward Cobos Téllez,(G-02) AUC,(S-03) Bloque Montes de María
+8,(P-08) Freddy Rendón Herrera,(G-02) AUC,(S-04) Bloque Elmer Cárdenas
+9,(P-09) Iván Roberto Duque Gaviria,(G-02) AUC,(S-05) Autodefensas Campesinas del Magdalena Medio
+10,(P-10) Rodrigo Pérez Alzate,(G-02) AUC,(S-06) Bloque Central Bolívar
+11,(P-11) Óscar Leonardo Montealegre Beltrán,(G-02) AUC,(S-06) Bloque Central Bolívar
+12,(P-12) José Eleazar Moreno Sánchez,(G-02) AUC,(S-07) Bloque Héroes del Llano
+13,(P-13) Manuel de Jesús Pirabán,(G-02) AUC,(S-07) Bloque Héroes del Llano
+14,(P-14) Arlex Arango,(G-02) AUC,(S-08) Bloque Centauros
+15,(P-15) Jorge Iván Laverde Zapata,(G-02) AUC,(S-09) Bloque Catatumbo
+16,(P-16) Alonso Ojeda Awad,(G-03) ELN-REPLANTEAMIENTO,
+17,(P-17) Medardo Correa Arboleda,(G-03) ELN-REPLANTEAMIENTO,
+18,(P-18) Carlos Arturo Velandia Jagua,(G-04) ELN,
+19,(P-19) Gabriel Barrios,(G-05) PRT,
+20,(P-20) José Matías Ortiz Sarmiento,(G-05) PRT,
+21,(P-21) Enrique Flórez,(G-05) PRT,
+22,(P-22) Gloria Quiceno,(G-06) M-19,
+23,(P-23) Vera Grabe,(G-06) M-19,
+24,(P-24) Álvaro Jiménez Millán,(G-06) M-19,
+25,(P-25) Luz Amparo Jiménez,(G-06) M-19,
+26,(P-26) Fabio Mariño Vargas,(G-06) M-19,
+27,(P-27) Fernando Hernández Valencia,(G-07) CRS,
+28,(P-28) Luis Eduardo Celis Méndez,(G-07) CRS,
+29,(P-29) María Aureliana Buendía,(G-08) FARC-EP,
+30,(P-30) Rodrigo Londoño Echeverri,(G-08) FARC-EP,
+31,(P-31) Gabriel Ángel,(G-08) FARC-EP,
+32,(P-32) Griselda Lobo,(G-08) FARC-EP,
+33,(P-33) María Camila Moreno,(G-09) ICTJ,
+34,(P-34) Juan Carlos Villamizar,(G-09) ICTJ,
+35,(P-35) Francisco de Roux,(G-10) CEV,
+36,(P-36) Lucía González,(G-10) CEV,
+37,(P-37) Marta Ruiz,(G-10) CEV,
+38,,(G-11) ABCPAZ,
