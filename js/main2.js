@@ -1,18 +1,25 @@
 
 var i = 0;
 
-var scenes,
-  groups,
-  subgroups,
-  characters;
+var data = {};
 
-d3.csv( './data/scenes.csv' ).then( data => scenes = data );
+d3.csv( './data/scenes.csv' ).then( d => {
+  d = d.map( i => {
+    if ( i[ 'frameworks' ].includes( ',' ) ) {
+      i[ 'frameworks' ] = i[ 'frameworks' ].split( ',' );
+    } else {
+      i[ 'frameworks' ] = [ i[ 'frameworks' ] ];
+    }
+    return i 
+  } );
+  data[ 'scenes' ] = d
+} );
 
-d3.csv( './data/groups.csv' ).then( data => groups = data );
+d3.csv( './data/groups.csv' ).then( d => data[ 'groups' ] = d );
 
-d3.csv( './data/subgroups.csv' ).then( data => subgroups = data );
+d3.csv( './data/subgroups.csv' ).then( d => data[ 'subgroups' ] = d );
 
-d3.csv( './data/characters.csv' ).then( data => characters = data );
+d3.csv( './data/characters.csv' ).then( d => data[ 'characters' ] = d );
 
 /*var tooltip = d3.select( 'body' ).append( 'div' )
   .attr( 'class', 'tooltip' )
@@ -20,37 +27,22 @@ d3.csv( './data/characters.csv' ).then( data => characters = data );
 
 d3.select( '#background' )
   .on( 'click', function() {
-
-    d3.selectAll( '.active' )
-      .classed( 'active', false )
-      .classed( 'scaled', false )
-      .attr( 'points', function() {
-        
-        var elem = d3.select( this );
-
-        // Define the kind of node
-        var entity = get_entity( elem );
-
-        if ( entity !== 'character' ) {
-          var scaled_points = geometric.polygonScale( get_points( elem ), .90909 );
-          return scaled_points.join( ' ' );
-        }
-
-      } );
-
-    d3.selectAll( '.active-text' )
-      .classed( 'active-text', false );
-
-    //close_panels();
-
+    restart();
   } );
 
 /* Scene interactions */
 
 d3.selectAll( '.scene,.group,.subgroup,.character' )
   .on( 'click', function() {
-    
+
     var elem = d3.select( this );
+
+    if ( !elem.classed( 'active' ) ) {
+      // Clean the canvas
+      restart();
+    } else {
+      return;
+    }
 
     // Define the kind of node
     var entity = get_entity( elem );
@@ -63,6 +55,28 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
     // Active the text
     d3.select( '#' + elem.attr( 'id' ) + '.' + entity + '-name' )
       .classed( 'active-text', true );
+
+    // Highlight related scenes
+    if ( entity === 'scene' ) {
+      var frameworks = data[ 'scenes' ].filter( d => d[ 'id' ] === elem.attr( 'id' ) )[ 0 ][ 'frameworks' ];
+      var related_scenes = data[ 'scenes' ].filter( s => {
+        if ( s[ 'frameworks' ].filter( value => frameworks.includes( value ) ).length > 0 ) {
+          return true;
+        } else {
+          return false;
+        }
+      } ).filter( s => s[ 'id' ] !== elem.attr( 'id' ) );
+
+      if ( related_scenes.length > 0 ) {
+        d3.selectAll( related_scenes.map( s => '#' + s[ 'id' ] ).join( ',' ) )
+          .classed( 'hover', false )
+          .classed( 'minor', true );
+      }
+
+    }
+
+    // Showing the panel
+    //show_panel( elem.attr( 'id' ), entity );
 
   } )
   .on( 'mouseover', function() {
@@ -89,6 +103,24 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
           .attr( 'points', scaled_points.join( ' ' ) );
       }
 
+    // Highlight related scenes
+    if ( entity === 'scene' ) {
+      var frameworks = data[ 'scenes' ].filter( d => d[ 'id' ] === elem.attr( 'id' ) )[ 0 ][ 'frameworks' ];
+      var related_scenes = data[ 'scenes' ].filter( s => {
+        if ( s[ 'frameworks' ].filter( value => frameworks.includes( value ) ).length > 0 ) {
+          return true;
+        } else {
+          return false;
+        }
+      } ).filter( s => s[ 'id' ] !== elem.attr( 'id' ) );
+
+      if ( related_scenes.length > 0 ) {
+        d3.selectAll( related_scenes.map( s => '#' + s[ 'id' ] ).join( ',' ) )
+          .classed( 'hover', true );
+      }
+
+    }
+
   } )
   .on( 'mouseout', function() {
     
@@ -97,8 +129,8 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
     // Define the kind of node
     var entity = get_entity( elem );
 
-    // Highlight down the node
-    elem
+    // Highlight down (ALL) the nodes
+    d3.selectAll( '.hover' )
       .classed( 'hover', false );
 
     // Hide the text
@@ -206,6 +238,9 @@ function get_points( elem ) {
 
 function show_panel( element_id, entity ) {
 
+  console.log( element_id );
+  console.log( entity );
+
   var element;
   var color;
   if ( entity === 'scene' ) { 
@@ -230,11 +265,11 @@ function show_panel( element_id, entity ) {
     .attr( 'class', 'panel' )
     .style( 'background-color', color );
 
-  panel.append( 'div' )
+  /*panel.append( 'div' )
     .attr( 'class', 'close-panel' )
     .append( 'span' )
     .append( 'b' )
-      .text( 'X' );
+      .text( 'X' );*/
   
   var body = panel.append( 'div' )
     .attr( 'class', 'panel-body' );
@@ -282,12 +317,12 @@ function show_panel( element_id, entity ) {
         .style( 'left', ( d3.event.x - 5 ) + 'px' )
     } ) );
 
-  d3.select( '#player_' + id ).selectAll( '.close-panel' )
+  /*d3.select( '#player_' + id ).selectAll( '.close-panel' )
     .on( 'click', function() {
       var element = d3.select( this.parentNode );
       console.log( element.attr( 'id' ) );
       close_panel( element );
-    } );
+    } );*/
 
   i++;
 
@@ -299,6 +334,36 @@ function close_panel( element ) {
     .duration( 1000 )
     .style( 'opacity', 0 )
     .remove();
+}
+
+function restart() {
+
+  d3.selectAll( '.active' )
+    .classed( 'active', false )
+    .classed( 'scaled', false )
+    .attr( 'points', function() {
+      
+      var elem = d3.select( this );
+
+      // Define the kind of node
+      var entity = get_entity( elem );
+
+      if ( entity !== 'character' ) {
+        var scaled_points = geometric.polygonScale( get_points( elem ), .90909 );
+        return scaled_points.join( ' ' );
+      }
+
+    } );
+
+  d3.selectAll( '.active-text' )
+    .classed( 'active-text', false );
+
+  d3.selectAll( '.minor' )
+    .classed( 'minor', false )
+
+  // Close all panels
+  close_panels();
+
 }
 
 function close_panels() {

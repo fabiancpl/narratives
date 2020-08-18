@@ -104,6 +104,11 @@ body {
   stroke-opacity: .9;
 }
 
+.minor {
+  fill-opacity: .4;
+  stroke-opacity: 0;
+}
+
 .visible-text {
   visibility: visible;
 }
