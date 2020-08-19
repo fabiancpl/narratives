@@ -121,6 +121,12 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
 
     }
 
+    // Show the relationships
+    d3.select( '#' + elem.attr( 'id' ) + '.' + entity + '-link' )
+      .classed( 'visible-link', true );
+
+
+
   } )
   .on( 'mouseout', function() {
     
@@ -145,6 +151,10 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
           .classed( 'scaled', false )
           .attr( 'points', scaled_points.join( ' ' ) );
       }
+
+    // Show the relationships
+    d3.selectAll( '#' + elem.attr( 'id' ) + '.' + entity + '-link' )
+      .classed( 'visible-link', false );
 
   } );
 

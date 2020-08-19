@@ -122,10 +122,15 @@ body {
   fill:none;
   stroke: #2D4D58;
   stroke-width: 0.5;
-  stroke-opacity: 0;
+  stroke-opacity: 1;
+  visibility: hidden;
 }
 
-.tooltip {
+.visible-link {
+  visibility: visible;
+}
+
+/*.tooltip {
   position: absolute;
   z-index: 10;
   visibility: hidden;
@@ -149,7 +154,7 @@ body {
 .character-tooltip {
   color: #f20505;
   opacity: .6;
-}
+}*/
 
 /* Draggable panel */
 
