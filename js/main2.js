@@ -120,7 +120,8 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
       }
 
     }
-
+    console.log( 'hover' );
+    console.log( d3.select( '#' + elem.attr( 'id' ) + '.' + entity + '-link' ) );
     // Show the relationships
     d3.select( '#' + elem.attr( 'id' ) + '.' + entity + '-link' )
       .classed( 'visible-link', true );
@@ -382,6 +383,4 @@ function close_panels() {
     .duration( 1000 )
     .style( 'opacity', 0 )
     .remove();
-
-  d3.selectAll( '.link' ).attr( 'active', false ).style( 'stroke-opacity', 0 );
 }
