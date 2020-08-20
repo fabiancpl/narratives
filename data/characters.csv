@@ -1,39 +1,39 @@
-﻿id,character,group,subgroup
-P-01,Francisco Caraballo,G-01,
-P-02,Ildefonso Henao Salazar,G-01,
-P-03,Raquel Vergara Álvarez,G-01,
-P-04,Álvaro Villarraga Sarmiento,G-01,
-P-05,Nodier Giraldo Giraldo,G-02,(S-01) Bloque Resistencia Tayrona
-P-06,(P-06) Óscar José Ospino,G-02,(S-02) Bloque Norte
-P-07,(P-07) Edward Cobos Téllez,G-02,(S-03) Bloque Montes de María
-P-08,(P-08) Freddy Rendón Herrera,G-02,(S-04) Bloque Elmer Cárdenas
-P-09,(P-09) Iván Roberto Duque Gaviria,G-02,(S-05) Autodefensas Campesinas del Magdalena Medio
-P-10,(P-10) Rodrigo Pérez Alzate,G-02,(S-06) Bloque Central Bolívar
-P-11,(P-11) Óscar Leonardo Montealegre Beltrán,G-02,(S-06) Bloque Central Bolívar
-P-12,(P-12) José Eleazar Moreno Sánchez,G-02,(S-07) Bloque Héroes del Llano
-P-13,(P-13) Manuel de Jesús Pirabán,G-02,(S-07) Bloque Héroes del Llano
-P-14,(P-14) Arlex Arango,G-02,(S-08) Bloque Centauros
-P-15,(P-15) Jorge Iván Laverde Zapata,G-02,(S-09) Bloque Catatumbo
-P-16,(P-16) Alonso Ojeda Awad,G-03,
-P-17,(P-17) Medardo Correa Arboleda,G-03,
-P-18,(P-18) Carlos Arturo Velandia Jagua,G-04,
-P-19,(P-19) Gabriel Barrios,G-05,
-P-20,(P-20) José Matías Ortiz Sarmiento,G-05,
-P-21,(P-21) Enrique Flórez,G-05,
-P-22,(P-22) Gloria Quiceno,G-06,
-P-23,(P-23) Vera Grabe,G-06,
-P-24,(P-24) Álvaro Jiménez Millán,G-06,
-P-25,(P-25) Luz Amparo Jiménez,G-06,
-P-26,(P-26) Fabio Mariño Vargas,G-06,
-P-27,(P-27) Fernando Hernández Valencia,G-07,
-P-28,(P-28) Luis Eduardo Celis Méndez,G-07,
-P-29,(P-29) María Aureliana Buendía,G-08,
-P-30,(P-30) Rodrigo Londoño Echeverri,G-08,
-P-31,(P-31) Gabriel Ángel,G-08,
-P-32,(P-32) Griselda Lobo,G-08,
-P-33,(P-33) María Camila Moreno,G-09,
-P-34,(P-34) Juan Carlos Villamizar,G-09,
-P-35,(P-35) Francisco de Roux,G-10,
-P-36,(P-36) Lucía González,G-10,
-P-37,(P-37) Marta Ruiz,G-10,
-P-38,,(G-11) ABCPAZ,
+﻿id,character,group,subgroup,audio
+P-01,Francisco Caraballo,G-01,,Preludio_Soy_2.Francisco_Caraballo.mp3
+P-02,Ildefonso Henao Salazar,G-01,,Preludio_Soy_1.Ildefonso_Henao_Salazar.mp3
+P-03,Raquel Vergara Álvarez,G-01,,Preludio_Soy_3.Raquel Vergara Álvarez.mp3
+P-04,Álvaro Villarraga Sarmiento,G-01,,Preludio_Soy_4.Álvaro Villarraga Sarmiento.mp3
+P-05,Nodier Giraldo Giraldo,G-02,S-01,Preludio_Soy_5.Nodier Giraldo.mp3
+P-06,Óscar José Ospino,G-02,S-02,
+P-07,Edward Cobos Téllez,G-02,S-03,Preludio_Soy_7.Edward Cobos Téllez.mp3
+P-08,Freddy Rendón Herrera,G-02,S-04,
+P-09,Iván Roberto Duque Gaviria,G-02,S-05,Preludio_Soy_9.Iván Roberto Duque Gaviria.mp3
+P-10,Rodrigo Pérez Alzate,G-02,S-06,
+P-11,Óscar Leonardo Montealegre Beltrán,G-02,S-06,Preludio_Soy_11.Óscar Leonardo Montealegre Beltrán.mp3
+P-12,José Eleazar Moreno Sánchez,G-02,S-07,Preludio_Soy_12.José Eleazar Moreno Sánchez.mp3
+P-13,Manuel de Jesús Pirabán,G-02,S-07,Preludio_Soy_14.Manuel de Jesús Pirabán.mp3
+P-14,Arlex Arango,G-02,S-08,
+P-15,Jorge Iván Laverde Zapata,G-02,S-09,Preludio_Soy_15.Jorge Iván Laverde Zapata.mp3
+P-16,Alonso Ojeda Awad,G-03,,Preludio_Soy_16.Alonso Ojeda Awad.mp3
+P-17,Medardo Correa Arboleda,G-03,,Preludio_Soy_17.Medardo Correa Arboleda.mp3
+P-18,Carlos Arturo Velandia Jagua,G-04,,Preludio_Soy_18.Carlos Arturo Velandia Jagua.mp3
+P-19,Gabriel Barrios,G-05,,
+P-20,José Matías Ortiz Sarmiento,G-05,,Preludio_Soy_23.José Matías Ortiz SarmientoJosé Matías Ortiz.mp3
+P-21,Enrique Flórez,G-05,,
+P-22,Gloria Quiceno,G-06,,Preludio_Soy_24.Gloria Quiceno.mp3
+P-23,Vera Grabe,G-06,,Preludio_Soy_25.Vera Grabe.mp3
+P-24,Álvaro Jiménez Millán,G-06,,Preludio_Soy_26.Álvaro Jiménez Millán.mp3
+P-25,Luz Amparo Jiménez,G-06,,Preludio_Soy_27.Luz Amparo Jiménez.mp3
+P-26,Fabio Mariño Vargas,G-06,,Preludio_Soy_28.Fabio Mariño Vargas.mp3
+P-27,Fernando Hernández Valencia,G-07,,Preludio_Soy_29.Fernando Hernández Valencia.mp3
+P-28,Luis Eduardo Celis Méndez,G-07,,Preludio_Soy_30.Luis Eduardo Celis Méndez.mp3
+P-29,María Aureliana Buendía,G-08,,
+P-30,Rodrigo Londoño Echeverri,G-08,,
+P-31,Gabriel Ángel,G-08,,
+P-32,Griselda Lobo,G-08,,
+P-33,María Camila Moreno,G-09,,
+P-34,Juan Carlos Villamizar,G-09,,
+P-35,Francisco de Roux,G-10,,
+P-36,Lucía González,G-10,,
+P-37,Marta Ruiz,G-10,,
+P-38,,G-11,,,
