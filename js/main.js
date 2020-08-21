@@ -21,6 +21,8 @@ d3.csv( './data/subgroups.csv' ).then( d => data[ 'subgroups' ] = d );
 
 d3.csv( './data/characters.csv' ).then( d => data[ 'characters' ] = d );
 
+d3.csv( './data/relationships.csv' ).then( d => data[ 'relationships' ] = d );
+
 /*var tooltip = d3.select( 'body' ).append( 'div' )
   .attr( 'class', 'tooltip' )
   .text( '' );*/
@@ -120,13 +122,34 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
       }
 
     }
-    console.log( 'hover' );
-    console.log( d3.select( '#' + elem.attr( 'id' ) + '.' + entity + '-link' ) );
+    
     // Show the relationships
-    d3.select( '#' + elem.attr( 'id' ) + '.' + entity + '-link' )
-      .classed( 'visible-link', true );
+    if ( [ 'scene', 'character' ].includes( entity ) ) {
+      data[ 'relationships' ]
+        .filter( d => d[ entity ] === elem.attr( 'id' ) )
+        .map( r => {
+          r[ 'group' ] = data[ 'characters' ].filter( c => c[ 'id' ] === r[ 'character' ] )[ 0 ][ 'group' ];
+          return r;
+        } )
+        .map( r => {
 
+          d3.select( '#' + r[ 'scene' ] + '.scene-link' )
+            .classed( 'visible-link', true );
 
+          d3.select( '#' + r[ 'group' ] + '.group-link' )
+            .classed( 'visible-link', true );
+
+          d3.select( '#' + r[ 'group' ] + '.group-name' )
+            .classed( 'visible-text', true );          
+
+          d3.select( '#' + r[ 'character' ] + '.character-link' )
+            .classed( 'visible-link', true );
+
+          d3.select( '#' + r[ 'character' ] + '.character-name' )
+            .classed( 'visible-text', true );
+
+        } );
+    }
 
   } )
   .on( 'mouseout', function() {
@@ -153,9 +176,13 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
           .attr( 'points', scaled_points.join( ' ' ) );
       }
 
-    // Show the relationships
-    d3.selectAll( '#' + elem.attr( 'id' ) + '.' + entity + '-link' )
+    // Hide all visible elements (no actives)
+
+    d3.selectAll( '.link' )
       .classed( 'visible-link', false );
+
+    d3.selectAll( '.visible-text' )
+      .classed( 'visible-text', false );
 
   } );
 

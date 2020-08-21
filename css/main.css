@@ -111,6 +111,7 @@ body {
 
 .visible-text {
   visibility: visible;
+  fill-opacity: .6;
 }
 
 .active-text {
