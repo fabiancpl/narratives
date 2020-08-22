@@ -16,11 +16,52 @@ body {
 
 #hover-space {
   background-color: #a3bfb5;
-  overflow: hidden;
-  height: 30px;
+  overflow: visible;
+  height: auto;
   color: #FBFEF4;
   font-size: 0.7rem;
   letter-spacing: 0.2rem;
+}
+
+
+
+.row{
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  /* margin-right: -15px; */
+  /* margin-left: -15px; */
+  box-sizing: border-box;
+}
+.row:after ,
+.row:before {
+  box-sizing: border-box;
+}
+.row .col{
+  -ms-flex-preferred-size: 0;
+  flex-basis: 0;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  max-width: 100%;
+  padding-left: .75rem;
+  padding-right: .75rem;
+}
+
+.grid-image{
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  width: 40%;
+}
+.text-center {
+  text-align: center !important;
+}
+
+#info-top-bar{
+  display: none;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 /* Vis */
