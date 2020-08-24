@@ -110,7 +110,9 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
       data[ 'relationships' ]
         .filter( d => d[ entity ] === elem.attr( 'id' ) )
         .map( r => {
-          r[ 'group' ] = data[ 'characters' ].filter( c => c[ 'id' ] === r[ 'character' ] )[ 0 ][ 'group' ];
+          var character = data[ 'characters' ].filter( c => c[ 'id' ] === r[ 'character' ] )[ 0 ];
+          r[ 'group' ] = character[ 'group' ];
+          r[ 'subgroup' ] = character[ 'subgroup' ];
           return r;
         } )
         .map( r => {
@@ -124,14 +126,19 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
           d3.select( '#' + r[ 'scene' ] + '.scene-name' )
             .classed( 'visible-text', true );  
 
-          d3.select( '#' + r[ 'group' ] + '.group' )
-            .classed( 'hover', true );
+          if ( r[ 'subgroup' ] !== '' ) {
+            d3.select( '#' + r[ 'subgroup' ] + '.subgroup' )
+              .classed( 'hover', true );          
+          } else {
+            d3.select( '#' + r[ 'group' ] + '.group' )
+              .classed( 'hover', true );
+          }
 
           d3.select( '#' + r[ 'group' ] + '.group-link' )
             .classed( 'visible-link', true );
 
           d3.select( '#' + r[ 'group' ] + '.group-name' )
-            .classed( 'visible-text', true );          
+            .classed( 'visible-text', true );
 
           d3.select( '#' + r[ 'character' ] + '.character' )
             .classed( 'hover', true );
