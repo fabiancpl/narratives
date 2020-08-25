@@ -14,6 +14,10 @@ body {
   transition: 0.5s
 }
 
+#btn-info{
+  cursor: pointer;
+}
+
 #hover-space {
   background-color: #a3bfb5;
   overflow: visible;
@@ -21,9 +25,59 @@ body {
   color: #FBFEF4;
   font-size: 0.7rem;
   letter-spacing: 0.2rem;
+  position: fixed;
+  width: 100%;
 }
 
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1050;
+  display: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  outline: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
 
+.modal-dialog {
+  position: relative;
+  width: auto;
+  margin: .5rem;
+  pointer-events: none;
+  max-width: 100%;
+  margin: 0px;
+  height: 100%;
+}
+
+.modal-content {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+  background-color: #000;
+  background-clip: padding-box;
+  border: 1px solid rgba(0,0,0,.2);
+  border-radius: 0rem;
+  outline: 0;
+}
+
+#btn-close{
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border-radius: 50px;
+  border: 0;
+  padding: 5px 15px;
+  background: #a50404;
+  color: #fff;
+}
 
 .row{
   display: -ms-flexbox;
@@ -62,6 +116,10 @@ body {
   display: none;
   padding-top: 15px;
   padding-bottom: 15px;
+}
+
+#video{
+  width: 100%;
 }
 
 /* Vis */

@@ -1,7 +1,12 @@
 var hoverMenu = $( '#hidden-menu' );
 var contentInfo = $( '#info-top-bar' )
+var btnInfo = $( '#btn-info' )
+var btnClose = $( '#btn-close' )
+var video = $( '#video' )
 
-document.addEventListener('mousemove', mouseUpdate); 
+$(document).ready(function(){
+  init();
+})
 
 function mouseUpdate (event) { 
   // console.log(contentInfo.height())
@@ -22,4 +27,31 @@ function mouseUpdate (event) {
     contentInfo.fadeOut('slow');
   }
   
+}
+
+function showVideo () {
+  $('.modal').show()
+  document.removeEventListener('mousemove', mouseUpdate);
+
+  var media = document.getElementById('video')
+  media.muted = true;
+  media.play();
+
+  // .show().trigger("play")
+  video.bind('ended', function () { 
+    console.log('SE TERMINO EL VIDEO')
+    hideVideo()
+  })
+}
+
+function hideVideo () {
+  $('.modal').hide()
+  document.addEventListener('mousemove', mouseUpdate);
+}
+
+function init() {
+  document.addEventListener('mousemove', mouseUpdate); 
+  showVideo()
+  btnInfo.on('click', showVideo)
+  btnClose.on('click', hideVideo)
 }
