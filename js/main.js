@@ -98,7 +98,7 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
 
     // Show the text
     d3.select( '#' + elem.attr( 'id' ) + '.' + entity + '-name' )
-      .classed( 'visible-text', true ); 
+      .classed( 'visible-text', true );
     
     // Scale up the node, if it is not previously scaled
     if ( entity !== 'character' )
@@ -114,9 +114,11 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
       data[ 'relationships' ]
         .filter( d => d[ entity ] === elem.attr( 'id' ) )
         .map( r => {
-          var character = data[ 'characters' ].filter( c => c[ 'id' ] === r[ 'character' ] )[ 0 ];
-          r[ 'group' ] = character[ 'group' ];
-          r[ 'subgroup' ] = character[ 'subgroup' ];
+          if ( r[ 'character' ] !== '' ) {
+            var character = data[ 'characters' ].filter( c => c[ 'id' ] === r[ 'character' ] )[ 0 ];
+            r[ 'group' ] = character[ 'group' ];
+            r[ 'subgroup' ] = character[ 'subgroup' ];
+          }
           return r;
         } )
         .map( r => {
@@ -130,27 +132,51 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
           d3.select( '#' + r[ 'scene' ] + '.scene-name' )
             .classed( 'visible-text', true );  
 
-          if ( r[ 'subgroup' ] !== '' ) {
-            d3.select( '#' + r[ 'subgroup' ] + '.subgroup' )
-              .classed( 'hover', true );          
-          } else {
-            d3.select( '#' + r[ 'group' ] + '.group' )
+          if ( r[ 'character' ] !== '' ) {
+
+            if ( r[ 'subgroup' ] !== '' ) {
+              d3.select( '#' + r[ 'subgroup' ] + '.subgroup' )
+                .classed( 'hover', true );          
+            } else {
+              d3.select( '#' + r[ 'group' ] + '.group' )
+                .classed( 'hover', true );
+            }
+
+            d3.select( '#' + r[ 'group' ] + '.group-link' )
+              .classed( 'visible-link', true );
+
+            d3.select( '#' + r[ 'group' ] + '.group-name' )
+              .classed( 'visible-text', true );
+
+            d3.select( '#' + r[ 'character' ] + '.character' )
               .classed( 'hover', true );
+
+            d3.select( '#' + r[ 'character' ] + '.character-link' )
+              .classed( 'visible-link', true );
+
+            d3.select( '#' + r[ 'character' ] + '.character-name' )
+              .classed( 'visible-text', true );
           }
 
-          d3.select( '#' + r[ 'group' ] + '.group-link' )
-            .classed( 'visible-link', true );
+        } );
+    } else if( entity == 'group' ) {
+      data[ 'characters' ]
+        .filter( d => d[ entity ] === elem.attr( 'id' ) )
+        .map( r => {
+
+          d3.select( '#' + r[ 'group' ] + '.group' )
+              .classed( 'hover', true );
 
           d3.select( '#' + r[ 'group' ] + '.group-name' )
             .classed( 'visible-text', true );
 
-          d3.select( '#' + r[ 'character' ] + '.character' )
+          d3.select( '#' + r[ 'id' ] + '.character' )
             .classed( 'hover', true );
 
-          d3.select( '#' + r[ 'character' ] + '.character-link' )
+          d3.select( '#' + r[ 'id' ] + '.character-link' )
             .classed( 'visible-link', true );
 
-          d3.select( '#' + r[ 'character' ] + '.character-name' )
+          d3.select( '#' + r[ 'id' ] + '.character-name' )
             .classed( 'visible-text', true );
 
         } );
