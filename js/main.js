@@ -23,13 +23,13 @@ d3.csv( './data/characters.csv' ).then( d => data[ 'characters' ] = d );
 
 d3.csv( './data/relationships.csv' ).then( d => data[ 'relationships' ] = d );
 
-/*var tooltip = d3.select( 'body' ).append( 'div' )
-  .attr( 'class', 'tooltip' )
-  .text( '' );*/
-
 d3.select( '#background' )
   .on( 'click', function() {
     restart();
+
+    // Showing the phantoms
+    d3.select( '.phantoms' )
+      .style( 'visibility', 'visible' );
   } );
 
 /* Scene interactions */
@@ -79,6 +79,10 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
 
     // Showing the panel
     show_panel( elem.attr( 'id' ), entity );
+
+    // Hiding the phantoms
+    d3.select( '.phantoms' )
+      .style( 'visibility', 'hidden' );
 
   } )
   .on( 'mouseover', function() {
@@ -199,74 +203,6 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
       }
 
   } );
-
-/*d3.selectAll( '' )
-  .on( 'click', function() {
-    var elem = d3.select( this );
-    if ( elem.attr( 'active' ) == 'true' ) {
-      elem.attr( 'active', false ).style( 'fill-opacity', 0 ).style( 'stroke-opacity', .6 );
-    } else if ( elem.attr( 'active' ) == 'false' || elem.attr( 'active' ) === null ) {
-      elem.attr( 'active', true ).style( 'fill-opacity', .9 ).style( 'stroke-opacity', .9 );
-    }
-    
-    if ( elem.attr( 'class' ) === 'scene' ) {
-      show_panel( elem.attr( 'id' ), 'scene' );
-    } else if ( elem.attr( 'class' ) === 'group' ) {
-      show_panel( elem.attr( 'id' ), 'group' );
-    } else if ( elem.attr( 'class' ) === 'subgroup' ) {
-      show_panel( elem.attr( 'id' ), 'subgroup' );
-    } else if ( elem.attr( 'class' ) === 'character' ) {
-      show_panel( elem.attr( 'id' ), 'character' );
-    }
-
-    var links = d3.selectAll( '.link' );
-    if ( links.attr( 'active' ) == 'true' ) {
-      links.attr( 'active', false ).style( 'stroke-opacity', 0 );
-    } else if ( links.attr( 'active' ) == 'false' || links.attr( 'active' ) === null ) {
-      links.attr( 'active', true ).style( 'stroke-opacity', 1 );
-    }
-
-  } )
-  .on( 'mouseover', function() {
-    var elem = d3.select( this );
-    var id = elem.attr( 'id' );
-    var text;
-
-    if ( elem.attr( 'active' ) == 'true' ) {
-      
-    } else if ( elem.attr( 'active' ) == 'false' || elem.attr( 'active' ) === null ) {
-      elem.style( 'fill-opacity', .2 ).style( 'stroke-opacity', .6 );
-    }
-
-    if ( elem.attr( 'class' ) === 'scene' ) {
-      text = scenes.filter( d => d[ 'id' ] === id )[ 0 ][ 'scene' ];
-    } else if ( elem.attr( 'class' ) === 'group' ) {
-      text = groups.filter( d => d[ 'id' ] === id )[ 0 ][ 'acronym' ];
-    } else if ( elem.attr( 'class' ) === 'subgroup' ) {
-      text = subgroups.filter( d => d[ 'id' ] === id )[ 0 ][ 'subgroup' ];
-    } else {
-      text = characters.filter( d => d[ 'id' ] === id )[ 0 ][ 'character' ];
-    }
-    elem.style( 'cursor', 'pointer' );
-    return tooltip
-      .style( 'visibility', 'visible' )
-      .html( '<span class="' + elem.attr( 'class' ) + '-tooltip"><b>' + text + '</b></span>' );
-  } )
-  .on( 'mousemove', function() {
-    return tooltip.style( 'top', ( event.pageY - 15 ) + 'px' ).style( 'left', ( event.pageX + 15 ) + 'px' );
-  } )
-  .on( 'mouseout', function() {
-    var elem = d3.select( this );
-
-    if ( elem.attr( 'active' ) == 'true' ) {
-      
-    } else if ( elem.attr( 'active' ) == 'false' || elem.attr( 'active' ) === null ) {
-      elem.style( 'fill-opacity', 0 ).style( 'stroke-opacity', .2 );
-    }
-
-    return tooltip.style( 'visibility', 'hidden' );
-  } );
-*/
 
 function get_entity( elem ) {
   var entity;
