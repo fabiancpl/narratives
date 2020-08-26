@@ -26,6 +26,23 @@
     </style>
     <link rel="stylesheet" href="./css/main.css">
 
+    <script type="text/javascript">
+      var PASSWORD = 'n4Rr4T1v4S';
+      var store = sessionStorage.getItem( 'password' );
+      var s = '';
+      if ( store === null ) {
+        while ( s != PASSWORD ) {
+          s = prompt( 'Ingrese la contraseña para ver el contenido:' );
+          if ( s == PASSWORD ) {
+            sessionStorage.setItem( 'password', s );
+            window.location.href = 'index.html';
+          } else {
+            alert( 'Contraseña incorrecta, intente de nuevo' );
+          }
+        }
+      }
+    </script>
+
   </head>
   <body>
 
