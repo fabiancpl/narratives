@@ -23,8 +23,7 @@ body {
   overflow: visible;
   height: auto;
   color: #a3bfb5;
-  font-size: 0.7rem;
-  letter-spacing: 0.2rem;
+  font-size: 0.8rem;
   position: fixed;
   width: 100%;
 }
@@ -114,8 +113,8 @@ body {
 
 #info-top-bar{
   display: none;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 #video{
@@ -140,6 +139,7 @@ body {
   stroke-opacity: .2;
   stroke-width: 2px;
   stroke-miterlimit: 10;
+  cursor: pointer;
 }
 
 .scene-name{
@@ -156,6 +156,7 @@ body {
   stroke-opacity: .2;
   stroke-width: 2px;
   stroke-miterlimit: 10;
+  cursor: pointer;
 }
 
 .group-name{
@@ -171,6 +172,7 @@ body {
   stroke-opacity: .2;
   stroke-width: 2px;
   stroke-miterlimit: 10;
+  cursor: pointer;
 }
 
 .character {
@@ -180,6 +182,7 @@ body {
   stroke-opacity: .2;
   stroke-width: 2px;
   stroke-miterlimit: 10;
+  cursor: pointer;
 }
 
 .character-name{
@@ -191,7 +194,6 @@ body {
 .hover {
   fill-opacity: .2;
   stroke-opacity: .6;
-  cursor: pointer;
 }
 
 .visited {
@@ -208,6 +210,10 @@ body {
   stroke-opacity: 0;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
 .visible-text {
   visibility: visible;
   fill-opacity: .6;
@@ -218,16 +224,26 @@ body {
   fill-opacity: .9;
 }
 
+.minor-text {
+  visibility: visible;
+  fill-opacity: .4;
+}
+
 .link {
   fill:none;
   stroke: #2D4D58;
   stroke-width: 0.5;
-  stroke-opacity: 1;
+  stroke-opacity: .6;
   visibility: hidden;
 }
 
 .visible-link {
   visibility: visible;
+}
+
+.active-link {
+  visibility: visible;
+  stroke-opacity: .9;
 }
 
 .phantom {

@@ -26,10 +26,6 @@ d3.csv( './data/relationships.csv' ).then( d => data[ 'relationships' ] = d );
 d3.select( '#background' )
   .on( 'click', function() {
     restart();
-
-    // Showing the phantoms
-    d3.select( '.phantoms' )
-      .style( 'visibility', 'visible' );
   } );
 
 /* Scene interactions */
@@ -39,50 +35,141 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
 
     var elem = d3.select( this );
 
-    /*if ( !elem.classed( 'active' ) ) {
-      // Clean the canvas
-      restart();
-    } else {
-      return;
-    }*/
-
     // Define the kind of node
     var entity = get_entity( elem );
 
-    // Active the node
-    elem
-      .classed( 'visited', true )
-      .classed( 'active', true );
+    if ( !elem.classed( 'active' ) && !elem.classed( 'minor' ) ) {
 
-    // Active the text
-    d3.select( '#' + elem.attr( 'id' ) + '.' + entity + '-name' )
-      .classed( 'active-text', true );
+      d3.selectAll( '.node ' )
+        .classed( 'hidden', true );
 
-    // Highlight related scenes
-    if ( entity === 'scene' ) {
-      var frameworks = data[ 'scenes' ].filter( d => d[ 'id' ] === elem.attr( 'id' ) )[ 0 ][ 'frameworks' ];
-      var related_scenes = data[ 'scenes' ].filter( s => {
-        if ( s[ 'frameworks' ].filter( value => frameworks.includes( value ) ).length > 0 ) {
-          return true;
-        } else {
-          return false;
-        }
-      } ).filter( s => s[ 'id' ] !== elem.attr( 'id' ) );
+      // Show the elements
+      if ( [ 'scene', 'character' ].includes( entity ) ) {
+        data[ 'relationships' ]
+          .filter( d => d[ entity ] === elem.attr( 'id' ) )
+          .map( r => {
+            if ( r[ 'character' ] !== '' ) {
+              var character = data[ 'characters' ].filter( c => c[ 'id' ] === r[ 'character' ] )[ 0 ];
+              r[ 'group' ] = character[ 'group' ];
+              r[ 'subgroup' ] = character[ 'subgroup' ];
+            }
+            return r;
+          } )
+          .map( r => {
 
-      if ( related_scenes.length > 0 ) {
-        d3.selectAll( related_scenes.map( s => '#' + s[ 'id' ] ).join( ',' ) )
-          .classed( 'hover', false )
-          .classed( 'minor', true );
+            d3.select( '#' + r[ 'scene' ] + '.scene' )
+              .classed( 'hidden', false )
+              .classed( 'visited', true )
+              .classed( 'active', true );
+
+            d3.select( '#' + r[ 'scene' ] + '.scene-link' )
+              .classed( 'active-link', true );
+
+            d3.select( '#' + r[ 'scene' ] + '.scene-name' )
+              .classed( 'active-text', true );  
+
+            if ( r[ 'character' ] !== '' ) {
+
+              if ( r[ 'subgroup' ] !== '' ) {
+                d3.select( '#' + r[ 'subgroup' ] + '.subgroup' )
+                  .classed( 'hidden', false )
+                  .classed( 'visited', true )
+                  .classed( 'active', true );
+
+                d3.select( '#' + r[ 'group' ] + '.group' )
+                  .classed( 'hidden', false )
+                  .classed( 'visited', true );
+              } else {
+                d3.select( '#' + r[ 'group' ] + '.group' )
+                  .classed( 'hidden', false )
+                  .classed( 'visited', true )
+                  .classed( 'active', true );
+              }
+
+              d3.select( '#' + r[ 'group' ] + '.group-link' )
+                .classed( 'active-link', true );
+
+              d3.select( '#' + r[ 'group' ] + '.group-name' )
+                .classed( 'active-text', true );
+
+              d3.select( '#' + r[ 'character' ] + '.character' )
+                .classed( 'hidden', false )
+                .classed( 'visited', true )
+                .classed( 'active', true );
+
+              d3.select( '#' + r[ 'character' ] + '.character-link' )
+                .classed( 'active-link', true );
+
+              d3.select( '#' + r[ 'character' ] + '.character-name' )
+                .classed( 'active-text', true );
+            }
+
+          } );
+      } else if( entity == 'group' ) {
+        data[ 'characters' ]
+          .filter( d => d[ entity ] === elem.attr( 'id' ) )
+          .map( r => {
+
+            d3.select( '#' + r[ 'group' ] + '.group' )
+              .classed( 'hidden', false )
+              .classed( 'visited', true )
+              .classed( 'active', true );
+
+            d3.select( '#' + r[ 'group' ] + '.group-name' )
+              .classed( 'active-text', true );
+
+            d3.select( '#' + r[ 'id' ] + '.character' )
+              .classed( 'hidden', false )
+              .classed( 'visited', true )
+              .classed( 'active', true );
+
+            d3.select( '#' + r[ 'id' ] + '.character-link' )
+              .classed( 'active-link', true );
+
+            d3.select( '#' + r[ 'id' ] + '.character-name' )
+              .classed( 'active-text', true );
+
+          } );
+      } else {
+        elem
+          .classed( 'hidden', false )
+          .classed( 'visited', true )
+          .classed( 'active', true );
       }
+
+      // Highlight related scenes
+      if ( entity === 'scene' ) {
+        var frameworks = data[ 'scenes' ].filter( d => d[ 'id' ] === elem.attr( 'id' ) )[ 0 ][ 'frameworks' ];
+        var related_scenes = data[ 'scenes' ].filter( s => {
+          if ( s[ 'frameworks' ].filter( value => frameworks.includes( value ) ).length > 0 ) {
+            return true;
+          } else {
+            return false;
+          }
+        } ).filter( s => s[ 'id' ] !== elem.attr( 'id' ) );
+
+        if ( related_scenes.length > 0 ) {
+          d3.selectAll( related_scenes.map( s => '#' + s[ 'id' ] + '.scene' ).join( ',' ) )
+            .classed( 'hidden', false )
+            .classed( 'hover', false )
+            .classed( 'minor', true );
+
+          d3.selectAll( related_scenes.map( s => '#' + s[ 'id' ] + '.scene-name' ).join( ',' ) )
+            .classed( 'hidden', false )
+            .classed( 'visible-text', false )
+            .classed( 'minor-text', true );
+        }
+
+      }
+
+      // Hiding the phantoms
+      d3.select( '.phantoms' )
+        .style( 'visibility', 'hidden' );
 
     }
 
     // Showing the panel
     show_panel( elem.attr( 'id' ), entity );
-
-    // Hiding the phantoms
-    d3.select( '.phantoms' )
-      .style( 'visibility', 'hidden' );
 
   } )
   .on( 'mouseover', function() {
@@ -92,113 +179,119 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
     // Define the kind of node
     var entity = get_entity( elem );
 
-    // Highlight the node
-    elem
-      .classed( 'hover', true );
+    if ( ( elem.classed( 'active' ) === false ) && ( elem.classed( 'minor' ) === false ) ) {
 
-    // Show the text
-    d3.select( '#' + elem.attr( 'id' ) + '.' + entity + '-name' )
-      .classed( 'visible-text', true );
-    
-    // Scale up the node, if it is not previously scaled
-    if ( entity !== 'character' )
-      if ( !elem.classed( 'scaled' ) ) {
-        var scaled_points = geometric.polygonScale( get_points( elem ), 1.1 );
-        elem
-          .classed( 'scaled', true )
-          .attr( 'points', scaled_points.join( ' ' ) );
-      }
-    
-    // Show the relationships
-    if ( [ 'scene', 'character' ].includes( entity ) ) {
-      data[ 'relationships' ]
-        .filter( d => d[ entity ] === elem.attr( 'id' ) )
-        .map( r => {
-          if ( r[ 'character' ] !== '' ) {
-            var character = data[ 'characters' ].filter( c => c[ 'id' ] === r[ 'character' ] )[ 0 ];
-            r[ 'group' ] = character[ 'group' ];
-            r[ 'subgroup' ] = character[ 'subgroup' ];
-          }
-          return r;
-        } )
-        .map( r => {
+      // Scale up the node, if it is not previously scaled
+      if ( entity !== 'character' )
+        if ( !elem.classed( 'scaled' ) ) {
+          var scaled_points = geometric.polygonScale( get_points( elem ), 1.1 );
+          elem
+            .classed( 'scaled', true )
+            .attr( 'points', scaled_points.join( ' ' ) );
+        }
 
-          d3.select( '#' + r[ 'scene' ] + '.scene' )
-            .classed( 'hover', true );
+      // Show the elements
+      if ( [ 'scene', 'character' ].includes( entity ) ) {
+        data[ 'relationships' ]
+          .filter( d => d[ entity ] === elem.attr( 'id' ) )
+          .map( r => {
+            if ( r[ 'character' ] !== '' ) {
+              var character = data[ 'characters' ].filter( c => c[ 'id' ] === r[ 'character' ] )[ 0 ];
+              r[ 'group' ] = character[ 'group' ];
+              r[ 'subgroup' ] = character[ 'subgroup' ];
+            }
+            return r;
+          } )
+          .map( r => {
 
-          d3.select( '#' + r[ 'scene' ] + '.scene-link' )
-            .classed( 'visible-link', true );
+            d3.select( '#' + r[ 'scene' ] + '.scene' )
+              .classed( 'hover', true );
 
-          d3.select( '#' + r[ 'scene' ] + '.scene-name' )
-            .classed( 'visible-text', true );  
+            d3.select( '#' + r[ 'scene' ] + '.scene-link' )
+              .classed( 'visible-link', true );
 
-          if ( r[ 'character' ] !== '' ) {
+            d3.select( '#' + r[ 'scene' ] + '.scene-name' )
+              .classed( 'visible-text', true );  
 
-            if ( r[ 'subgroup' ] !== '' ) {
-              d3.select( '#' + r[ 'subgroup' ] + '.subgroup' )
-                .classed( 'hover', true );          
-            } else {
-              d3.select( '#' + r[ 'group' ] + '.group' )
+            if ( r[ 'character' ] !== '' ) {
+
+              if ( r[ 'subgroup' ] !== '' ) {
+                d3.select( '#' + r[ 'subgroup' ] + '.subgroup' )
+                  .classed( 'hover', true );
+
+                d3.select( '#' + r[ 'group' ] + '.group' )
+                  .classed( 'hover', true );          
+              } else {
+                d3.select( '#' + r[ 'group' ] + '.group' )
+                  .classed( 'hover', true );
+              }
+
+              d3.select( '#' + r[ 'group' ] + '.group-link' )
+                .classed( 'visible-link', true );
+
+              d3.select( '#' + r[ 'group' ] + '.group-name' )
+                .classed( 'visible-text', true );
+
+              d3.select( '#' + r[ 'character' ] + '.character' )
                 .classed( 'hover', true );
+
+              d3.select( '#' + r[ 'character' ] + '.character-link' )
+                .classed( 'visible-link', true );
+
+              d3.select( '#' + r[ 'character' ] + '.character-name' )
+                .classed( 'visible-text', true );
             }
 
-            d3.select( '#' + r[ 'group' ] + '.group-link' )
-              .classed( 'visible-link', true );
+          } );
+      } else if( entity == 'group' ) {
+        data[ 'characters' ]
+          .filter( d => d[ entity ] === elem.attr( 'id' ) )
+          .map( r => {
+
+            d3.select( '#' + r[ 'group' ] + '.group' )
+                .classed( 'hover', true );
 
             d3.select( '#' + r[ 'group' ] + '.group-name' )
               .classed( 'visible-text', true );
 
-            d3.select( '#' + r[ 'character' ] + '.character' )
+            d3.select( '#' + r[ 'id' ] + '.character' )
               .classed( 'hover', true );
 
-            d3.select( '#' + r[ 'character' ] + '.character-link' )
+            d3.select( '#' + r[ 'id' ] + '.character-link' )
               .classed( 'visible-link', true );
 
-            d3.select( '#' + r[ 'character' ] + '.character-name' )
+            d3.select( '#' + r[ 'id' ] + '.character-name' )
               .classed( 'visible-text', true );
-          }
 
-        } );
-    } else if( entity == 'group' ) {
-      data[ 'characters' ]
-        .filter( d => d[ entity ] === elem.attr( 'id' ) )
-        .map( r => {
-
-          d3.select( '#' + r[ 'group' ] + '.group' )
-              .classed( 'hover', true );
-
-          d3.select( '#' + r[ 'group' ] + '.group-name' )
-            .classed( 'visible-text', true );
-
-          d3.select( '#' + r[ 'id' ] + '.character' )
-            .classed( 'hover', true );
-
-          d3.select( '#' + r[ 'id' ] + '.character-link' )
-            .classed( 'visible-link', true );
-
-          d3.select( '#' + r[ 'id' ] + '.character-name' )
-            .classed( 'visible-text', true );
-
-        } );
-    }
-
-    // Highlight related scenes
-    if ( entity === 'scene' ) {
-      var frameworks = data[ 'scenes' ].filter( d => d[ 'id' ] === elem.attr( 'id' ) )[ 0 ][ 'frameworks' ];
-      var related_scenes = data[ 'scenes' ].filter( s => {
-        if ( s[ 'frameworks' ].filter( value => frameworks.includes( value ) ).length > 0 ) {
-          return true;
-        } else {
-          return false;
-        }
-      } ).filter( s => s[ 'id' ] !== elem.attr( 'id' ) );
-
-      if ( related_scenes.length > 0 ) {
-        d3.selectAll( related_scenes.map( s => '#' + s[ 'id' ] ).join( ',' ) )
+          } );
+      } else {
+        elem
           .classed( 'hover', true );
       }
 
+      // Highlight related scenes
+      if ( entity === 'scene' ) {
+        var frameworks = data[ 'scenes' ].filter( d => d[ 'id' ] === elem.attr( 'id' ) )[ 0 ][ 'frameworks' ];
+        var related_scenes = data[ 'scenes' ].filter( s => {
+          if ( s[ 'frameworks' ].filter( value => frameworks.includes( value ) ).length > 0 ) {
+            return true;
+          } else {
+            return false;
+          }
+        } ).filter( s => s[ 'id' ] !== elem.attr( 'id' ) );
+
+        if ( related_scenes.length > 0 ) {
+          d3.selectAll( related_scenes.map( s => '#' + s[ 'id' ] + '.scene' ).join( ',' ) )
+            .classed( 'hover', true );
+
+          d3.selectAll( related_scenes.map( s => '#' + s[ 'id' ] + '.scene-name' ).join( ',' ) )
+            .classed( 'visible-text', true );
+        }
+
+      }
+
     }
+    
 
   } )
   .on( 'mouseout', function() {
@@ -213,15 +306,15 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
     d3.selectAll( '.hover' )
       .classed( 'hover', false );
 
-    d3.selectAll( '.link' )
-      .classed( 'visible-link', false );
-
     d3.selectAll( '.visible-text' )
       .classed( 'visible-text', false );
 
+    d3.selectAll( '.link' )
+      .classed( 'visible-link', false );
+
     // Scale down the text, if it is not active
     if ( entity !== 'character' )
-      if ( !elem.classed( 'active' ) ) {
+      if ( !elem.classed( 'active' ) && !elem.classed( 'minor' ) ) {
         var scaled_points = geometric.polygonScale( get_points( elem ), .90909 );
         elem
           .classed( 'scaled', false )
@@ -357,6 +450,16 @@ function close_panel( element ) {
 
 function restart() {
 
+  d3.selectAll( '.hidden' )
+    .classed( 'hidden', false );
+
+  d3.selectAll( '.active-link' )
+    .classed( 'active-link', false );
+
+  // Showing the phantoms
+  d3.select( '.phantoms' )
+    .style( 'visibility', 'visible' );
+
   d3.selectAll( '.active' )
     .classed( 'active', false )
     .classed( 'scaled', false )
@@ -376,6 +479,9 @@ function restart() {
 
   d3.selectAll( '.active-text' )
     .classed( 'active-text', false );
+
+  d3.selectAll( '.minor-text' )
+    .classed( 'minor-text', false );
 
   d3.selectAll( '.minor' )
     .classed( 'minor', false )
