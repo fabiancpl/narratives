@@ -3,6 +3,8 @@ var contentInfo = $( '#info-top-bar' )
 var btnInfo = $( '#btn-info' )
 var btnClose = $( '#btn-close' )
 var video = $( '#video' )
+var videoElement = document.getElementById('video')
+var btnActiveSound = $( '#btn-active-sound' )
 
 $(document).ready(function(){
   init();
@@ -40,11 +42,11 @@ function showVideo () {
   $('.modal').show()
   document.removeEventListener('mousemove', mouseUpdate);
 
-  var media = document.getElementById('video')
-  media.muted = true;
-  media.play();
+  videoElement.loop = false;
+  videoElement.controls = false;
+  videoElement.muted = true;
+  videoElement.play();
 
-  // .show().trigger("play")
   video.bind('ended', function () { 
     console.log('SE TERMINO EL VIDEO')
     hideVideo()
@@ -52,15 +54,31 @@ function showVideo () {
 }
 
 function hideVideo () {
+  videoElement.pause();
+  videoElement.currentTime = 0;
+  activeSoundVideo()
   $('.modal').hide()
   document.addEventListener('mousemove', mouseUpdate);
 }
 
+function activeSoundVideo(){
+  // console.log(this)
+  console.log(btnActiveSound.hasClass( "active" ))
+  if (btnActiveSound.hasClass( "active" )) {
+    btnActiveSound.removeClass("active")
+    videoElement.muted = true;
+  } else {
+    btnActiveSound.addClass("active")
+    videoElement.muted = false;
+  }
+}
+
 function init() {
   document.addEventListener('mousemove', mouseUpdate); 
-  //showVideo()
+  // showVideo()
   btnInfo.on('click', showVideo)
   btnClose.on('click', hideVideo)
   hoverMenu.on('click', showContentInfo)
+  btnActiveSound.on('click', activeSoundVideo)
 
 }
