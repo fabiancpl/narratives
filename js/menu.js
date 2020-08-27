@@ -20,7 +20,7 @@ function mouseUpdate (event) {
 
   if (event.pageY <= 23 && event.pageY >= 2){
     hoverMenu.css( { top: 0 } );
-  } else if (event.pageY >= contentInfo.height()) {
+  } else if (event.pageY >= hoverMenu.height()) {
     hoverMenu.css( { top: -23 } );
     hideContentInfo()
   } else if (event.pageY < 2) {
