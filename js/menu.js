@@ -18,15 +18,22 @@ function mouseUpdate (event) {
 
   if (event.pageY <= 23 && event.pageY >= 2){
     hoverMenu.css( { top: 0 } );
-    contentInfo.fadeIn();
   } else if (event.pageY >= contentInfo.height()) {
     hoverMenu.css( { top: -23 } );
-    contentInfo.fadeOut('slow');0
+    hideContentInfo()
   } else if (event.pageY < 2) {
     hoverMenu.css( { top: -23 } );
-    contentInfo.fadeOut('slow');
+    hideContentInfo()
   }
-  
+
+}
+
+function showContentInfo(){
+  contentInfo.fadeIn();
+}
+
+function hideContentInfo(){
+  contentInfo.fadeOut('slow');
 }
 
 function showVideo () {
@@ -54,4 +61,6 @@ function init() {
   //showVideo()
   btnInfo.on('click', showVideo)
   btnClose.on('click', hideVideo)
+  hoverMenu.on('click', showContentInfo)
+
 }
