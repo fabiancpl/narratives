@@ -195,6 +195,11 @@ body {
   cursor: pointer;
 }
 
+.organizers {
+  fill: #132F92;
+  stroke: #132F92;
+}
+
 .group-name{
   fill: #f20505;
   font-family: 'Heebo-SemiBold';
@@ -211,10 +216,16 @@ body {
   cursor: pointer;
 }
 
-.character {
+.subgroup-name{
   fill: #f20505;
+  font-family: 'Heebo-SemiBold';
+  visibility: hidden;
+}
+
+.character {
+  fill: #F25C69;
   fill-opacity: 0;
-  stroke: #f20505;
+  stroke: #F25C69;
   stroke-opacity: .2;
   stroke-width: 2px;
   stroke-miterlimit: 10;

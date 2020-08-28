@@ -115,7 +115,41 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
               .classed( 'visited', true )
               .classed( 'active', true );
 
-            d3.select( '#' + r[ 'group' ] + '.group-name' )
+            var group = data[ 'groups' ].filter( g => g[ 'id' ] === elem.attr( 'id' ) )[ 0 ];
+            if ( group[ 'organizer' ] === 'false' ) {
+
+              d3.select( '#' + r[ 'group' ] + '.group-name' )
+                .classed( 'active-text', true );
+
+              d3.select( '#' + r[ 'id' ] + '.character' )
+                .classed( 'hidden', false )
+                .classed( 'visited', true )
+                .classed( 'active', true );
+
+              d3.select( '#' + r[ 'id' ] + '.character-link' )
+                .classed( 'active-link', true );
+
+              d3.select( '#' + r[ 'id' ] + '.character-name' )
+                .classed( 'active-text', true );
+
+            }
+
+          } );
+      } else if( entity == 'subgroup' ) {
+        data[ 'characters' ]
+          .filter( d => d[ entity ] === elem.attr( 'id' ) )
+          .map( r => {
+
+            d3.select( '#' + r[ 'subgroup' ] + '.subgroup' )
+              .classed( 'hidden', false )
+              .classed( 'visited', true )
+              .classed( 'active', true );
+
+            d3.select( '#' + r[ 'group' ] + '.group' )
+              .classed( 'hidden', false )
+              .classed( 'visited', true );
+
+            d3.select( '#' + r[ 'subgroup' ] + '.subgroup-name' )
               .classed( 'active-text', true );
 
             d3.select( '#' + r[ 'id' ] + '.character' )
@@ -251,7 +285,36 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
             d3.select( '#' + r[ 'group' ] + '.group' )
                 .classed( 'hover', true );
 
-            d3.select( '#' + r[ 'group' ] + '.group-name' )
+            var group = data[ 'groups' ].filter( g => g[ 'id' ] === elem.attr( 'id' ) )[ 0 ];
+            if ( group[ 'organizer' ] === 'false' ) {
+              
+              d3.select( '#' + r[ 'group' ] + '.group-name' )
+                .classed( 'visible-text', true );
+
+              d3.select( '#' + r[ 'id' ] + '.character' )
+                .classed( 'hover', true );
+
+              d3.select( '#' + r[ 'id' ] + '.character-link' )
+                .classed( 'visible-link', true );
+
+              d3.select( '#' + r[ 'id' ] + '.character-name' )
+                .classed( 'visible-text', true );
+
+            }
+
+          } );
+      } else if( entity == 'subgroup' ) {
+        data[ 'characters' ]
+          .filter( d => d[ entity ] === elem.attr( 'id' ) )
+          .map( r => {
+
+            d3.select( '#' + r[ 'subgroup' ] + '.subgroup' )
+                .classed( 'hover', true );
+
+            d3.select( '#' + r[ 'group' ] + '.group' )
+                .classed( 'hover', true );
+              
+            d3.select( '#' + r[ 'subgroup' ] + '.subgroup-name' )
               .classed( 'visible-text', true );
 
             d3.select( '#' + r[ 'id' ] + '.character' )
@@ -352,13 +415,19 @@ function show_panel( element_id, entity ) {
     color = '#0d0d0d';
   } else if ( entity === 'group' ) {
     element = data[ 'groups' ].filter( d => d[ 'id' ] === element_id )[ 0 ];
-    color = '#f20505';
+    
+    var group = data[ 'groups' ].filter( g => g[ 'id' ] === element_id )[ 0 ];
+    if ( group[ 'organizer' ] === 'false' ) {
+      color = '#f20505';
+    } else {
+      color = '#132F92';
+    }
   } else if ( entity === 'subgroup' ) {
     element = data[ 'subgroups' ].filter( d => d[ 'id' ] === element_id )[ 0 ];
     color = '#f20505';
   } else if ( entity === 'character' ) {
     element = data[ 'characters' ].filter( d => d[ 'id' ] === element_id )[ 0 ];
-    color = '#f20505';
+    color = '#F25C69';
   }
 
   // Panel id
@@ -368,14 +437,14 @@ function show_panel( element_id, entity ) {
     .attr( 'id', 'player_' + id )
     .attr( 'class', 'panel' )
     .style( 'background-color', color )
-    .style( 'top', 50 * ( i + 1 ) + 'px' )
-    .style( 'left', 50 * ( i + 1 ) +'px' );
+    .style( 'top', ( 20 * ( i + 1 ) + 20 ) + 'px' )
+    .style( 'left', 20 * ( i + 1 ) +'px' );
 
-  panel.append( 'div' )
+  /*panel.append( 'div' )
     .attr( 'class', 'close-panel' )
     .append( 'span' )
     .append( 'b' )
-      .text( 'X' );
+      .text( 'X' );*/
   
   var body = panel.append( 'div' )
     .attr( 'class', 'panel-body' );
