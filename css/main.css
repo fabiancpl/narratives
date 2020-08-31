@@ -1,6 +1,6 @@
 body {
   background-color: #a3bfb5;
-  font-family: 'Heebo';
+  font-family: 'Heebo', sans-serif;
   margin: auto;
 }
 
@@ -180,8 +180,8 @@ body {
 
 .scene-name{
   fill: #0D0D0D;
-  fill-opacity: .6;
-  font-family: 'Heebo-SemiBold';
+  /*font-family: 'Heebo-SemiBold';*/
+  font-weight: 600;
   visibility: hidden;
 }
 
@@ -202,7 +202,8 @@ body {
 
 .group-name{
   fill: #f20505;
-  font-family: 'Heebo-SemiBold';
+  /*font-family: 'Heebo-SemiBold';*/
+  font-weight: 600;
   visibility: hidden;
 }
 
@@ -218,7 +219,8 @@ body {
 
 .subgroup-name{
   fill: #f20505;
-  font-family: 'Heebo-SemiBold';
+  /*font-family: 'Heebo-SemiBold';*/
+  font-weight: 600;
   visibility: hidden;
 }
 
@@ -234,7 +236,8 @@ body {
 
 .character-name{
   fill: #0D0D0D;
-  font-family: 'Heebo-SemiBold';
+  /*font-family: 'Heebo-SemiBold';*/
+  font-weight: 600;
   visibility: hidden;
 }
 

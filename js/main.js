@@ -498,12 +498,12 @@ function show_panel( element_id, entity ) {
         .style( 'left', ( d3.event.x - 10 ) + 'px' )
     } ) );
 
-  d3.select( '#player_' + id ).selectAll( '.close-panel' )
+  /*d3.select( '#player_' + id ).selectAll( '.close-panel' )
     .on( 'click', function() {
       var element = d3.select( this.parentNode );
       console.log( element.attr( 'id' ) );
       close_panel( element );
-    } );
+    } );*/
 
   i++;
 
@@ -566,4 +566,5 @@ function close_panels() {
     .duration( 1000 )
     .style( 'opacity', 0 )
     .remove();
+   i = 0;
 }
