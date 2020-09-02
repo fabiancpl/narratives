@@ -38,7 +38,11 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
     // Define the kind of node
     var entity = get_entity( elem );
 
-    if ( !elem.classed( 'active' ) && !elem.classed( 'minor' ) ) {
+    if ( !elem.classed( 'active' ) ) {
+
+      if ( elem.classed( 'minor' ) ) {
+        restart();
+      }
 
       d3.selectAll( '.node ' )
         .classed( 'hidden', true );

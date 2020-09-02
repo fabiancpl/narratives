@@ -251,8 +251,8 @@ body {
 }
 
 .active {
-  fill-opacity: .9;
-  stroke-opacity: .9;
+  fill-opacity: .75;
+  stroke-opacity: 0;
 }
 
 .minor {
