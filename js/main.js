@@ -23,6 +23,14 @@ d3.csv( './data/characters.csv' ).then( d => data[ 'characters' ] = d );
 
 d3.csv( './data/relationships.csv' ).then( d => data[ 'relationships' ] = d );
 
+d3.csv( './data/audio-scenes.csv' ).then( d => {
+  data[ 'audios' ] = d.map( a => {
+    a[ 'start_sec' ] = normalize_time( a[ 'start' ].split( ':' ).map( t => +t ) );
+    a[ 'end_sec' ] = normalize_time( a[ 'end' ].split( ':' ).map( t => +t ) );
+    return a
+  } );
+} );
+
 d3.select( '#background' )
   .on( 'click', function() {
     restart();
@@ -413,34 +421,41 @@ function get_points( elem ) {
 function show_panel( element_id, entity ) {
 
   var element;
+  var background_color;
   var color;
   if ( entity === 'scene' ) { 
     element = data[ 'scenes' ].filter( d => d[ 'id' ] === element_id )[ 0 ];
-    color = '#0d0d0d';
+    background_color = '#404945';
+    color = '#A3BFB5';
   } else if ( entity === 'group' ) {
     element = data[ 'groups' ].filter( d => d[ 'id' ] === element_id )[ 0 ];
     
     var group = data[ 'groups' ].filter( g => g[ 'id' ] === element_id )[ 0 ];
     if ( group[ 'organizer' ] === 'false' ) {
-      color = '#f20505';
+      background_color = '#DA3E3A';
+      color = '#0D0D0D';
     } else {
-      color = '#132F92';
+      background_color = '#132F92';
+      color = '#A3BFB5';
     }
   } else if ( entity === 'subgroup' ) {
     element = data[ 'subgroups' ].filter( d => d[ 'id' ] === element_id )[ 0 ];
-    color = '#f20505';
+    background_color = '#DA3E3A';
+    color = '#0D0D0D';
   } else if ( entity === 'character' ) {
     element = data[ 'characters' ].filter( d => d[ 'id' ] === element_id )[ 0 ];
-    color = '#F25C69';
+    background_color = '#DA797F';
+    color = '#0D0D0D';
   }
 
   // Panel id
-  var id = i;
+  var id = element_id;
 
   var panel = d3.select( 'body' ).append( 'div' )
     .attr( 'id', 'player_' + id )
     .attr( 'class', 'panel' )
-    .style( 'background-color', color )
+    .style( 'background-color', background_color )
+    .style( 'color', color )
     .style( 'top', ( 20 * ( i + 1 ) + 20 ) + 'px' )
     .style( 'left', 20 * ( i + 1 ) +'px' );
 
@@ -453,7 +468,24 @@ function show_panel( element_id, entity ) {
   var body = panel.append( 'div' )
     .attr( 'class', 'panel-body' );
 
-  body.append( 'div' )
+  // Drawing audio
+  if ( element[ 'audio' ] !== undefined && element[ 'audio' ] !== '' ) {
+    body.append( 'div' )
+      .attr( 'class', 'mediPlayer' )
+      .append( 'audio' )
+        .attr( 'class', 'listen' )
+        .attr( 'preload', 'none' )
+        .attr( 'data-size', 30 )
+        .attr( 'src', './audios/' + element[ 'audio' ] );
+
+    $( '#player_' + id ).find( '.mediPlayer' ).mediaPlayer( { 'id': id, 'color': color } );
+  }
+
+  var div = body.append( 'div' )
+    .style( 'float', 'left' )
+    .style( 'margin-left', '5px' );
+
+  div.append( 'div' )
     .append( 'span' )
     .html( '<b>' + element[ entity ].toUpperCase() + '</b>&nbsp;&nbsp;' );
 
@@ -464,35 +496,30 @@ function show_panel( element_id, entity ) {
       var subgroup_name = data[ 'subgroups' ].filter( d => d[ 'id' ] === element[ 'subgroup' ] )[ 0 ][ 'subgroup' ];
     }
 
-    body.append( 'div' )
+    div.append( 'div' )
       .append( 'span' )
       .style( 'font-size', '0.7rem' )
       .html( ( ( subgroup_name !== undefined ) ? ( subgroup_name + '<br />' ) : '' ) + group_name + '&nbsp;&nbsp;' );
+  } else if ( entity === 'scene' ) {
+    var container = div.append( 'div' )
+    
+    container
+      .append( 'span' )
+        .attr( 'id', 'popup_time_char_' + element_id )
+        .style( 'font-size', '0.7rem' )
+        .text( '' );
+
   } else if ( entity === 'subgroup' )
-    body.append( 'div' )
+    div.append( 'div' )
       .append( 'span' )
       .style( 'font-size', '0.7rem' )
       .html( 'Autodefensas Unidas de Colombia&nbsp;&nbsp;' );
-
-  
-  // Drawing audio
-  if ( element[ 'audio' ] !== undefined && element[ 'audio' ] !== '' ) {
-    body.append( 'div' )
-      .attr( 'class', 'mediPlayer' )
-      .append( 'audio' )
-        .attr( 'class', 'listen' )
-        .attr( 'preload', 'none' )
-        .attr( 'data-size', 35 )
-        .attr( 'src', './audios/' + element[ 'audio' ] );
-
-    $( '#player_' + id ).find( '.mediPlayer' ).mediaPlayer();
-  }
 
   // Showing panel
   panel
     .transition()
     .duration( 1000 )
-    .style( 'opacity', .75 );
+    .style( 'opacity', 1 );
 
   // Dragging panel
   panel
@@ -571,4 +598,8 @@ function close_panels() {
     .style( 'opacity', 0 )
     .remove();
    i = 0;
+}
+
+function normalize_time( array ) {
+  return ( array[ 0 ] * 60 ) + array[ 1 ];
 }

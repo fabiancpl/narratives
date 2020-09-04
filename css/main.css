@@ -314,9 +314,10 @@ body {
   background-color: #f20505;
   opacity: 0;
   min-width: 200px;
-  min-height: 65px;
-  border-radius: 3px;
+  min-height: 55px;
+  border-radius: 5px;
   color: #a3bfb5;
+  padding: 10px 10px;
   top: 50px;
   left: 50px;
 }
@@ -331,7 +332,6 @@ body {
 }
 
 .panel-body {
-  padding: 3px 10px;
   font-size: 0.8rem;
   letter-spacing: 0.1rem;
   cursor: move;
