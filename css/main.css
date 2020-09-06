@@ -315,6 +315,7 @@ body {
   opacity: 0;
   min-width: 200px;
   min-height: 55px;
+  max-width: 420px;
   border-radius: 5px;
   color: #a3bfb5;
   padding: 10px 10px;

@@ -526,11 +526,12 @@ function show_panel( element_id, entity ) {
       .style( 'float', 'left' )
       .style( 'margin-left', '5px' );
 
-    div.append( 'div' )
-      .append( 'span' )
-      .html( '<b>' + element[ entity ].toUpperCase() + '</b>&nbsp;&nbsp;' );
-
     if ( entity === 'character' ) {
+
+      div.append( 'div' )
+        .append( 'span' )
+        .html( '<b>' + element[ entity ] + '</b>&nbsp;&nbsp;' );
+
       var group_name = data[ 'groups' ].filter( d => d[ 'id' ] === element[ 'group' ] )[ 0 ][ 'group' ];
       if ( element[ 'subgroup' ] !== '' ) {
         console.log( element );
@@ -540,8 +541,14 @@ function show_panel( element_id, entity ) {
       div.append( 'div' )
         .append( 'span' )
         .style( 'font-size', '0.7rem' )
-        .html( ( ( subgroup_name !== undefined ) ? ( subgroup_name + '<br />' ) : '' ) + group_name + '&nbsp;&nbsp;' );
+        .html( '<b>' + group_name.toUpperCase() + '</b>' + ( ( subgroup_name !== undefined ) ? ( '<br />' + subgroup_name ) : '' ) );
+
     } else if ( entity === 'scene' ) {
+
+      div.append( 'div' )
+        .append( 'span' )
+        .html( '<b>' + element[ entity ] + '</b>&nbsp;&nbsp;' );
+
       var container = div.append( 'div' )
       
       container
@@ -550,11 +557,34 @@ function show_panel( element_id, entity ) {
           .style( 'font-size', '0.7rem' )
           .text( '' );
 
-    } else if ( entity === 'subgroup' )
+    } else if ( entity === 'subgroup' ) {
+
+      div.append( 'div' )
+        .append( 'span' )
+        .html( '<b>AUTODEFENSAS UNIDAS DE COLOMBIA</b>&nbsp;&nbsp;' );
+
       div.append( 'div' )
         .append( 'span' )
         .style( 'font-size', '0.7rem' )
-        .html( 'Autodefensas Unidas de Colombia&nbsp;&nbsp;' );
+        .html( '<b /><b>' + element[ entity ] + '</b>&nbsp;&nbsp;' );
+
+      div.append( 'div' )
+        .append( 'span' )
+        .style( 'font-size', '0.7rem' )
+        .html( data[ 'subgroups' ].find( g => g[ 'id' ] === element_id )[ 'description' ] );
+
+    } else if ( entity === 'group' ) {
+
+      div.append( 'div' )
+        .append( 'span' )
+        .html( '<b>' + element[ entity ].toUpperCase() + '</b>&nbsp;&nbsp;' );
+
+      div.append( 'div' )
+        .append( 'span' )
+        .style( 'font-size', '0.7rem' )
+        .html( data[ 'groups' ].find( g => g[ 'id' ] === element_id )[ 'description' ] );
+
+    }
 
     // Showing panel
     panel
