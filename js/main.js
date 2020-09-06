@@ -3,12 +3,19 @@ var i = 0;
 
 var data = {};
 
+var last_click = undefined,
+  panels = [];
+
 d3.csv( './data/scenes.csv' ).then( d => {
   d = d.map( i => {
-    if ( i[ 'frameworks' ].includes( ',' ) ) {
-      i[ 'frameworks' ] = i[ 'frameworks' ].split( ',' );
+    if ( i[ 'related' ].includes( ',' ) ) {
+      i[ 'related' ] = i[ 'related' ].split( ',' );
     } else {
-      i[ 'frameworks' ] = [ i[ 'frameworks' ] ];
+      if ( i[ 'related' ] !== '' ) {
+        i[ 'related' ] = [ i[ 'related' ] ];  
+      } else {
+        i[ 'related' ] = [];
+      }
     }
     return i 
   } );
@@ -46,91 +53,151 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
     // Define the kind of node
     var entity = get_entity( elem );
 
-    if ( !elem.classed( 'active' ) ) {
+    console.log( 'last_click: ', last_click );
+    console.log( 'entity: ', entity );
 
-      if ( elem.classed( 'minor' ) ) {
-        restart();
+    if ( [ 'group', 'subgroup' ].includes( last_click ) ) {
+
+      if ( entity === 'character' ) {
+        
+        // Showing the panel
+        show_panel( elem.attr( 'id' ), entity );
+      
+      } else if ( last_click === 'subgroup' && entity === 'group' ) {
+
+        show_elements();
+
       }
 
-      d3.selectAll( '.node ' )
-        .classed( 'hidden', true );
+    } else if ( last_click === 'scene' && entity === 'character' ) {
 
-      // Show the elements
-      if ( [ 'scene', 'character' ].includes( entity ) ) {
-        data[ 'relationships' ]
-          .filter( d => d[ entity ] === elem.attr( 'id' ) )
-          .map( r => {
-            if ( r[ 'character' ] !== '' ) {
-              var character = data[ 'characters' ].filter( c => c[ 'id' ] === r[ 'character' ] )[ 0 ];
-              r[ 'group' ] = character[ 'group' ];
-              r[ 'subgroup' ] = character[ 'subgroup' ];
-            }
-            return r;
-          } )
-          .map( r => {
+      // Showing the panel
+      show_panel( elem.attr( 'id' ), entity );
 
-            d3.select( '#' + r[ 'scene' ] + '.scene' )
-              .classed( 'hidden', false )
-              .classed( 'visited', true )
-              .classed( 'active', true );
+    } else {
 
-            d3.select( '#' + r[ 'scene' ] + '.scene-link' )
-              .classed( 'active-link', true );
+      if ( ![ 'group', 'subgroup' ].includes( entity ) || last_click === undefined ) {
 
-            d3.select( '#' + r[ 'scene' ] + '.scene-name' )
-              .classed( 'active-text', true );  
+        show_elements();
 
-            if ( r[ 'character' ] !== '' ) {
+      }
 
-              if ( r[ 'subgroup' ] !== '' ) {
-                d3.select( '#' + r[ 'subgroup' ] + '.subgroup' )
-                  .classed( 'hidden', false )
-                  .classed( 'visited', true )
-                  .classed( 'active', true );
+    }
 
-                d3.select( '#' + r[ 'group' ] + '.group' )
-                  .classed( 'hidden', false )
-                  .classed( 'visited', true );
-              } else {
-                d3.select( '#' + r[ 'group' ] + '.group' )
-                  .classed( 'hidden', false )
-                  .classed( 'visited', true )
-                  .classed( 'active', true );
+    function show_elements() {
+
+      restart();
+
+        d3.selectAll( '.node ' )
+          .classed( 'hidden', true );
+
+        // Show the elements
+        if ( [ 'scene', 'character' ].includes( entity ) ) {
+          data[ 'relationships' ]
+            .filter( d => d[ entity ] === elem.attr( 'id' ) )
+            .map( r => {
+              if ( r[ 'character' ] !== '' ) {
+                var character = data[ 'characters' ].filter( c => c[ 'id' ] === r[ 'character' ] )[ 0 ];
+                r[ 'group' ] = character[ 'group' ];
+                r[ 'subgroup' ] = character[ 'subgroup' ];
               }
+              return r;
+            } )
+            .map( r => {
 
-              d3.select( '#' + r[ 'group' ] + '.group-link' )
-                .classed( 'active-link', true );
-
-              d3.select( '#' + r[ 'group' ] + '.group-name' )
-                .classed( 'active-text', true );
-
-              d3.select( '#' + r[ 'character' ] + '.character' )
+              d3.select( '#' + r[ 'scene' ] + '.scene' )
                 .classed( 'hidden', false )
                 .classed( 'visited', true )
                 .classed( 'active', true );
 
-              d3.select( '#' + r[ 'character' ] + '.character-link' )
+              d3.select( '#' + r[ 'scene' ] + '.scene-link' )
                 .classed( 'active-link', true );
 
-              d3.select( '#' + r[ 'character' ] + '.character-name' )
-                .classed( 'active-text', true );
-            }
+              d3.select( '#' + r[ 'scene' ] + '.scene-name' )
+                .classed( 'active-text', true );  
 
-          } );
-      } else if( entity == 'group' ) {
-        data[ 'characters' ]
-          .filter( d => d[ entity ] === elem.attr( 'id' ) )
-          .map( r => {
+              if ( r[ 'character' ] !== '' ) {
 
-            d3.select( '#' + r[ 'group' ] + '.group' )
-              .classed( 'hidden', false )
-              .classed( 'visited', true )
-              .classed( 'active', true );
+                if ( r[ 'subgroup' ] !== '' ) {
+                  d3.select( '#' + r[ 'subgroup' ] + '.subgroup' )
+                    .classed( 'hidden', false )
+                    .classed( 'visited', true )
+                    .classed( 'active', true );
 
-            var group = data[ 'groups' ].filter( g => g[ 'id' ] === elem.attr( 'id' ) )[ 0 ];
-            if ( group[ 'organizer' ] === 'false' ) {
+                  d3.select( '#' + r[ 'group' ] + '.group' )
+                    .classed( 'hidden', false )
+                    .classed( 'visited', true );
+                } else {
+                  d3.select( '#' + r[ 'group' ] + '.group' )
+                    .classed( 'hidden', false )
+                    .classed( 'visited', true )
+                    .classed( 'active', true );
+                }
 
-              d3.select( '#' + r[ 'group' ] + '.group-name' )
+                d3.select( '#' + r[ 'group' ] + '.group-link' )
+                  .classed( 'active-link', true );
+
+                d3.select( '#' + r[ 'group' ] + '.group-name' )
+                  .classed( 'active-text', true );
+
+                d3.select( '#' + r[ 'character' ] + '.character' )
+                  .classed( 'hidden', false )
+                  .classed( 'visited', true )
+                  .classed( 'active', true );
+
+                d3.select( '#' + r[ 'character' ] + '.character-link' )
+                  .classed( 'active-link', true );
+
+                d3.select( '#' + r[ 'character' ] + '.character-name' )
+                  .classed( 'active-text', true );
+              }
+
+            } );
+        } else if( entity == 'group' ) {
+          data[ 'characters' ]
+            .filter( d => d[ entity ] === elem.attr( 'id' ) )
+            .map( r => {
+
+              d3.select( '#' + r[ 'group' ] + '.group' )
+                .classed( 'hidden', false )
+                .classed( 'visited', true )
+                .classed( 'active', true );
+
+              var group = data[ 'groups' ].filter( g => g[ 'id' ] === elem.attr( 'id' ) )[ 0 ];
+              if ( group[ 'organizer' ] === 'false' ) {
+
+                d3.select( '#' + r[ 'group' ] + '.group-name' )
+                  .classed( 'active-text', true );
+
+                d3.select( '#' + r[ 'id' ] + '.character' )
+                  .classed( 'hidden', false )
+                  .classed( 'visited', true )
+                  .classed( 'active', true );
+
+                d3.select( '#' + r[ 'id' ] + '.character-link' )
+                  .classed( 'active-link', true );
+
+                d3.select( '#' + r[ 'id' ] + '.character-name' )
+                  .classed( 'active-text', true );
+
+              }
+
+            } );
+        } else if( entity == 'subgroup' ) {
+          data[ 'characters' ]
+            .filter( d => d[ entity ] === elem.attr( 'id' ) )
+            .map( r => {
+
+              d3.select( '#' + r[ 'subgroup' ] + '.subgroup' )
+                .classed( 'hidden', false )
+                .classed( 'visited', true )
+                .classed( 'active', true );
+
+              d3.select( '#' + r[ 'group' ] + '.group' )
+                .classed( 'hidden', false )
+                .classed( 'visited', true );
+
+              d3.select( '#' + r[ 'subgroup' ] + '.subgroup-name' )
                 .classed( 'active-text', true );
 
               d3.select( '#' + r[ 'id' ] + '.character' )
@@ -144,78 +211,41 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
               d3.select( '#' + r[ 'id' ] + '.character-name' )
                 .classed( 'active-text', true );
 
-            }
-
-          } );
-      } else if( entity == 'subgroup' ) {
-        data[ 'characters' ]
-          .filter( d => d[ entity ] === elem.attr( 'id' ) )
-          .map( r => {
-
-            d3.select( '#' + r[ 'subgroup' ] + '.subgroup' )
-              .classed( 'hidden', false )
-              .classed( 'visited', true )
-              .classed( 'active', true );
-
-            d3.select( '#' + r[ 'group' ] + '.group' )
-              .classed( 'hidden', false )
-              .classed( 'visited', true );
-
-            d3.select( '#' + r[ 'subgroup' ] + '.subgroup-name' )
-              .classed( 'active-text', true );
-
-            d3.select( '#' + r[ 'id' ] + '.character' )
-              .classed( 'hidden', false )
-              .classed( 'visited', true )
-              .classed( 'active', true );
-
-            d3.select( '#' + r[ 'id' ] + '.character-link' )
-              .classed( 'active-link', true );
-
-            d3.select( '#' + r[ 'id' ] + '.character-name' )
-              .classed( 'active-text', true );
-
-          } );
-      } else {
-        elem
-          .classed( 'hidden', false )
-          .classed( 'visited', true )
-          .classed( 'active', true );
-      }
-
-      // Highlight related scenes
-      if ( entity === 'scene' ) {
-        var frameworks = data[ 'scenes' ].filter( d => d[ 'id' ] === elem.attr( 'id' ) )[ 0 ][ 'frameworks' ];
-        var related_scenes = data[ 'scenes' ].filter( s => {
-          if ( s[ 'frameworks' ].filter( value => frameworks.includes( value ) ).length > 0 ) {
-            return true;
-          } else {
-            return false;
-          }
-        } ).filter( s => s[ 'id' ] !== elem.attr( 'id' ) );
-
-        if ( related_scenes.length > 0 ) {
-          d3.selectAll( related_scenes.map( s => '#' + s[ 'id' ] + '.scene' ).join( ',' ) )
+            } );
+        } else {
+          elem
             .classed( 'hidden', false )
-            .classed( 'hover', false )
-            .classed( 'minor', true );
-
-          d3.selectAll( related_scenes.map( s => '#' + s[ 'id' ] + '.scene-name' ).join( ',' ) )
-            .classed( 'hidden', false )
-            .classed( 'visible-text', false )
-            .classed( 'minor-text', true );
+            .classed( 'visited', true )
+            .classed( 'active', true );
         }
 
-      }
+        // Highlight related scenes
+        if ( entity === 'scene' ) {
+          var related_scenes = data[ 'scenes' ].filter( d => d[ 'id' ] === elem.attr( 'id' ) )[ 0 ][ 'related' ];
+          if ( related_scenes.length > 0 ) {
+            d3.selectAll( related_scenes.map( s => '#' + s + '.scene' ).join( ',' ) )
+              .classed( 'hidden', false )
+              .classed( 'hover', false )
+              .classed( 'minor', true );
 
-      // Hiding the phantoms
-      d3.select( '.phantoms' )
-        .style( 'visibility', 'hidden' );
+            d3.selectAll( related_scenes.map( s => '#' + s + '.scene-name' ).join( ',' ) )
+              .classed( 'hidden', false )
+              .classed( 'visible-text', false )
+              .classed( 'minor-text', true );
+          }
+
+        }
+
+        // Hiding the phantoms
+        d3.select( '.phantoms' )
+          .style( 'visibility', 'hidden' );
+
+        // Showing the panel
+        show_panel( elem.attr( 'id' ), entity );
+
+        last_click = entity;
 
     }
-
-    // Showing the panel
-    show_panel( elem.attr( 'id' ), entity );
 
   } )
   .on( 'mouseover', function() {
@@ -228,13 +258,13 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
     if ( ( elem.classed( 'active' ) === false ) && ( elem.classed( 'minor' ) === false ) ) {
 
       // Scale up the node, if it is not previously scaled
-      if ( entity !== 'character' )
+      /*if ( entity !== 'character' )
         if ( !elem.classed( 'scaled' ) ) {
           var scaled_points = geometric.polygonScale( get_points( elem ), 1.1 );
           elem
             .classed( 'scaled', true )
             .attr( 'points', scaled_points.join( ' ' ) );
-        }
+        }*/
 
       // Show the elements
       if ( [ 'scene', 'character' ].includes( entity ) ) {
@@ -300,8 +330,12 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
             var group = data[ 'groups' ].filter( g => g[ 'id' ] === elem.attr( 'id' ) )[ 0 ];
             if ( group[ 'organizer' ] === 'false' ) {
               
-              d3.select( '#' + r[ 'group' ] + '.group-name' )
-                .classed( 'visible-text', true );
+              if ( last_click !== 'subgroup' ) {
+
+                d3.select( '#' + r[ 'group' ] + '.group-name' )
+                  .classed( 'visible-text', true );
+
+              }
 
               d3.select( '#' + r[ 'id' ] + '.character' )
                 .classed( 'hover', true );
@@ -315,6 +349,14 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
             }
 
           } );
+
+        //if ( last_click === 'subgroup' ) {
+
+          var group_characters = data[ 'characters' ].filter( c => c[ 'group' ] === elem.attr( 'id' ) ).map( c => c[ 'id' ] );
+          d3.selectAll( group_characters.map( c => '#' + c + '.character' ).join( ',' ) )
+            .classed( 'hidden', false );
+        //}
+
       } else if( entity == 'subgroup' ) {
         data[ 'characters' ]
           .filter( d => d[ entity ] === elem.attr( 'id' ) )
@@ -346,20 +388,12 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
 
       // Highlight related scenes
       if ( entity === 'scene' ) {
-        var frameworks = data[ 'scenes' ].filter( d => d[ 'id' ] === elem.attr( 'id' ) )[ 0 ][ 'frameworks' ];
-        var related_scenes = data[ 'scenes' ].filter( s => {
-          if ( s[ 'frameworks' ].filter( value => frameworks.includes( value ) ).length > 0 ) {
-            return true;
-          } else {
-            return false;
-          }
-        } ).filter( s => s[ 'id' ] !== elem.attr( 'id' ) );
-
+        var related_scenes = data[ 'scenes' ].filter( d => d[ 'id' ] === elem.attr( 'id' ) )[ 0 ][ 'related' ];
         if ( related_scenes.length > 0 ) {
-          d3.selectAll( related_scenes.map( s => '#' + s[ 'id' ] + '.scene' ).join( ',' ) )
+          d3.selectAll( related_scenes.map( s => '#' + s + '.scene' ).join( ',' ) )
             .classed( 'hover', true );
 
-          d3.selectAll( related_scenes.map( s => '#' + s[ 'id' ] + '.scene-name' ).join( ',' ) )
+          d3.selectAll( related_scenes.map( s => '#' + s + '.scene-name' ).join( ',' ) )
             .classed( 'visible-text', true );
         }
 
@@ -387,14 +421,19 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
     d3.selectAll( '.link' )
       .classed( 'visible-link', false );
 
+    if ( last_click !== undefined ) {
+      d3.selectAll( '.character:not(.active)' )
+          .classed( 'hidden', true );
+    }
+
     // Scale down the text, if it is not active
-    if ( entity !== 'character' )
+    /*if ( entity !== 'character' )
       if ( !elem.classed( 'active' ) && !elem.classed( 'minor' ) ) {
         var scaled_points = geometric.polygonScale( get_points( elem ), .90909 );
         elem
           .classed( 'scaled', false )
           .attr( 'points', scaled_points.join( ' ' ) );
-      }
+      }*/
 
   } );
 
@@ -420,123 +459,128 @@ function get_points( elem ) {
 
 function show_panel( element_id, entity ) {
 
-  var element;
-  var background_color;
-  var color;
-  if ( entity === 'scene' ) { 
-    element = data[ 'scenes' ].filter( d => d[ 'id' ] === element_id )[ 0 ];
-    background_color = '#404945';
-    color = '#A3BFB5';
-  } else if ( entity === 'group' ) {
-    element = data[ 'groups' ].filter( d => d[ 'id' ] === element_id )[ 0 ];
-    
-    var group = data[ 'groups' ].filter( g => g[ 'id' ] === element_id )[ 0 ];
-    if ( group[ 'organizer' ] === 'false' ) {
+  if ( panels.indexOf( element_id ) === -1 ) {
+
+    var element;
+    var background_color;
+    var color;
+    if ( entity === 'scene' ) { 
+      element = data[ 'scenes' ].filter( d => d[ 'id' ] === element_id )[ 0 ];
+      background_color = '#404945';
+      color = '#A3BFB5';
+    } else if ( entity === 'group' ) {
+      element = data[ 'groups' ].filter( d => d[ 'id' ] === element_id )[ 0 ];
+      
+      var group = data[ 'groups' ].filter( g => g[ 'id' ] === element_id )[ 0 ];
+      if ( group[ 'organizer' ] === 'false' ) {
+        background_color = '#DA3E3A';
+        color = '#0D0D0D';
+      } else {
+        background_color = '#132F92';
+        color = '#A3BFB5';
+      }
+    } else if ( entity === 'subgroup' ) {
+      element = data[ 'subgroups' ].filter( d => d[ 'id' ] === element_id )[ 0 ];
       background_color = '#DA3E3A';
       color = '#0D0D0D';
-    } else {
-      background_color = '#132F92';
-      color = '#A3BFB5';
-    }
-  } else if ( entity === 'subgroup' ) {
-    element = data[ 'subgroups' ].filter( d => d[ 'id' ] === element_id )[ 0 ];
-    background_color = '#DA3E3A';
-    color = '#0D0D0D';
-  } else if ( entity === 'character' ) {
-    element = data[ 'characters' ].filter( d => d[ 'id' ] === element_id )[ 0 ];
-    background_color = '#DA797F';
-    color = '#0D0D0D';
-  }
-
-  // Panel id
-  var id = element_id;
-
-  var panel = d3.select( 'body' ).append( 'div' )
-    .attr( 'id', 'player_' + id )
-    .attr( 'class', 'panel' )
-    .style( 'background-color', background_color )
-    .style( 'color', color )
-    .style( 'top', ( 20 * ( i + 1 ) + 20 ) + 'px' )
-    .style( 'left', 20 * ( i + 1 ) +'px' );
-
-  /*panel.append( 'div' )
-    .attr( 'class', 'close-panel' )
-    .append( 'span' )
-    .append( 'b' )
-      .text( 'X' );*/
-  
-  var body = panel.append( 'div' )
-    .attr( 'class', 'panel-body' );
-
-  // Drawing audio
-  if ( element[ 'audio' ] !== undefined && element[ 'audio' ] !== '' ) {
-    body.append( 'div' )
-      .attr( 'class', 'mediPlayer' )
-      .append( 'audio' )
-        .attr( 'class', 'listen' )
-        .attr( 'preload', 'none' )
-        .attr( 'data-size', 30 )
-        .attr( 'src', './audios/' + element[ 'audio' ] );
-
-    $( '#player_' + id ).find( '.mediPlayer' ).mediaPlayer( { 'id': id, 'color': color } );
-  }
-
-  var div = body.append( 'div' )
-    .style( 'float', 'left' )
-    .style( 'margin-left', '5px' );
-
-  div.append( 'div' )
-    .append( 'span' )
-    .html( '<b>' + element[ entity ].toUpperCase() + '</b>&nbsp;&nbsp;' );
-
-  if ( entity === 'character' ) {
-    var group_name = data[ 'groups' ].filter( d => d[ 'id' ] === element[ 'group' ] )[ 0 ][ 'group' ];
-    if ( element[ 'subgroup' ] !== '' ) {
-      console.log( element );
-      var subgroup_name = data[ 'subgroups' ].filter( d => d[ 'id' ] === element[ 'subgroup' ] )[ 0 ][ 'subgroup' ];
+    } else if ( entity === 'character' ) {
+      element = data[ 'characters' ].filter( d => d[ 'id' ] === element_id )[ 0 ];
+      background_color = '#DA797F';
+      color = '#0D0D0D';
     }
 
-    div.append( 'div' )
+    // Panel id
+    var id = element_id;
+
+    var panel = d3.select( 'body' ).append( 'div' )
+      .attr( 'id', 'player_' + id )
+      .attr( 'class', 'panel' )
+      .style( 'background-color', background_color )
+      .style( 'color', color )
+      .style( 'top', ( 20 * ( i + 1 ) + 20 ) + 'px' )
+      .style( 'left', 20 * ( i + 1 ) +'px' );
+
+    /*panel.append( 'div' )
+      .attr( 'class', 'close-panel' )
       .append( 'span' )
-      .style( 'font-size', '0.7rem' )
-      .html( ( ( subgroup_name !== undefined ) ? ( subgroup_name + '<br />' ) : '' ) + group_name + '&nbsp;&nbsp;' );
-  } else if ( entity === 'scene' ) {
-    var container = div.append( 'div' )
+      .append( 'b' )
+        .text( 'X' );*/
     
-    container
-      .append( 'span' )
-        .attr( 'id', 'popup_time_char_' + element_id )
-        .style( 'font-size', '0.7rem' )
-        .text( '' );
+    var body = panel.append( 'div' )
+      .attr( 'class', 'panel-body' );
 
-  } else if ( entity === 'subgroup' )
+    // Drawing audio
+    if ( element[ 'audio' ] !== undefined && element[ 'audio' ] !== '' ) {
+      body.append( 'div' )
+        .attr( 'class', 'mediPlayer' )
+        .append( 'audio' )
+          .attr( 'class', 'listen' )
+          .attr( 'preload', 'none' )
+          .attr( 'data-size', 30 )
+          .attr( 'src', './audios/' + element[ 'audio' ] );
+
+      $( '#player_' + id ).find( '.mediPlayer' ).mediaPlayer( { 'id': id, 'color': color } );
+    }
+
+    var div = body.append( 'div' )
+      .style( 'float', 'left' )
+      .style( 'margin-left', '5px' );
+
     div.append( 'div' )
       .append( 'span' )
-      .style( 'font-size', '0.7rem' )
-      .html( 'Autodefensas Unidas de Colombia&nbsp;&nbsp;' );
+      .html( '<b>' + element[ entity ].toUpperCase() + '</b>&nbsp;&nbsp;' );
 
-  // Showing panel
-  panel
-    .transition()
-    .duration( 1000 )
-    .style( 'opacity', 1 );
+    if ( entity === 'character' ) {
+      var group_name = data[ 'groups' ].filter( d => d[ 'id' ] === element[ 'group' ] )[ 0 ][ 'group' ];
+      if ( element[ 'subgroup' ] !== '' ) {
+        console.log( element );
+        var subgroup_name = data[ 'subgroups' ].filter( d => d[ 'id' ] === element[ 'subgroup' ] )[ 0 ][ 'subgroup' ];
+      }
 
-  // Dragging panel
-  panel
-    .call( d3.drag().on( 'drag', function() {
-      d3.select( this )
-        .style( 'top',  ( d3.event.y - 10 ) + 'px' )
-        .style( 'left', ( d3.event.x - 10 ) + 'px' )
-    } ) );
+      div.append( 'div' )
+        .append( 'span' )
+        .style( 'font-size', '0.7rem' )
+        .html( ( ( subgroup_name !== undefined ) ? ( subgroup_name + '<br />' ) : '' ) + group_name + '&nbsp;&nbsp;' );
+    } else if ( entity === 'scene' ) {
+      var container = div.append( 'div' )
+      
+      container
+        .append( 'span' )
+          .attr( 'id', 'popup_time_char_' + element_id )
+          .style( 'font-size', '0.7rem' )
+          .text( '' );
 
-  /*d3.select( '#player_' + id ).selectAll( '.close-panel' )
-    .on( 'click', function() {
-      var element = d3.select( this.parentNode );
-      console.log( element.attr( 'id' ) );
-      close_panel( element );
-    } );*/
+    } else if ( entity === 'subgroup' )
+      div.append( 'div' )
+        .append( 'span' )
+        .style( 'font-size', '0.7rem' )
+        .html( 'Autodefensas Unidas de Colombia&nbsp;&nbsp;' );
 
-  i++;
+    // Showing panel
+    panel
+      .transition()
+      .duration( 1000 )
+      .style( 'opacity', 1 );
+
+    // Dragging panel
+    panel
+      .call( d3.drag().on( 'drag', function() {
+        d3.select( this )
+          .style( 'top',  ( d3.event.y - 10 ) + 'px' )
+          .style( 'left', ( d3.event.x - 10 ) + 'px' )
+      } ) );
+
+    /*d3.select( '#player_' + id ).selectAll( '.close-panel' )
+      .on( 'click', function() {
+        var element = d3.select( this.parentNode );
+        console.log( element.attr( 'id' ) );
+        close_panel( element );
+      } );*/
+
+    panels.push( element_id );
+    i++;
+
+  }
 
 }
 
@@ -561,8 +605,8 @@ function restart() {
     .style( 'visibility', 'visible' );
 
   d3.selectAll( '.active' )
-    .classed( 'active', false )
-    .classed( 'scaled', false )
+    .classed( 'active', false );
+    /*.classed( 'scaled', false )
     .attr( 'points', function() {
       
       var elem = d3.select( this );
@@ -575,7 +619,7 @@ function restart() {
         return scaled_points.join( ' ' );
       }
 
-    } );
+    } );*/
 
   d3.selectAll( '.active-text' )
     .classed( 'active-text', false );
@@ -589,6 +633,8 @@ function restart() {
   // Close all panels
   close_panels();
 
+  last_click = undefined;
+
 }
 
 function close_panels() {
@@ -598,6 +644,8 @@ function close_panels() {
     .style( 'opacity', 0 )
     .remove();
    i = 0;
+
+  panels = []
 }
 
 function normalize_time( array ) {
