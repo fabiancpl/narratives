@@ -138,7 +138,7 @@ body {
   display: inline-block;
   margin-right: 10px;
   margin-bottom: 10px;
-  width: 40%;
+  width: 35%;
 }
 .text-center {
   text-align: center !important;
@@ -195,16 +195,20 @@ body {
   cursor: pointer;
 }
 
-.organizers {
+.organizer {
   fill: #132F92;
   stroke: #132F92;
 }
 
-.group-name{
+.group-name {
   fill: #f20505;
   /*font-family: 'Heebo-SemiBold';*/
   font-weight: 600;
   visibility: hidden;
+}
+
+.organizer-name {
+  fill: #132F92;
 }
 
 .subgroup {

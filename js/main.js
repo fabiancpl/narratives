@@ -328,7 +328,7 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
                 .classed( 'hover', true );
 
             var group = data[ 'groups' ].filter( g => g[ 'id' ] === elem.attr( 'id' ) )[ 0 ];
-            if ( group[ 'organizer' ] === 'false' ) {
+            //if ( group[ 'organizer' ] === 'false' ) {
               
               if ( last_click !== 'subgroup' ) {
 
@@ -346,7 +346,7 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
               d3.select( '#' + r[ 'id' ] + '.character-name' )
                 .classed( 'visible-text', true );
 
-            }
+            //}
 
           } );
 
