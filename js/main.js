@@ -473,7 +473,7 @@ function show_panel( element_id, entity ) {
       
       var group = data[ 'groups' ].filter( g => g[ 'id' ] === element_id )[ 0 ];
       if ( group[ 'organizer' ] === 'false' ) {
-        background_color = '#DA3E3A';
+        background_color = '#D24F4B';
         color = '#0D0D0D';
       } else {
         background_color = '#132F92';
@@ -481,7 +481,7 @@ function show_panel( element_id, entity ) {
       }
     } else if ( entity === 'subgroup' ) {
       element = data[ 'subgroups' ].filter( d => d[ 'id' ] === element_id )[ 0 ];
-      background_color = '#DA3E3A';
+      background_color = '#D24F4B';
       color = '#0D0D0D';
     } else if ( entity === 'character' ) {
       element = data[ 'characters' ].filter( d => d[ 'id' ] === element_id )[ 0 ];
