@@ -17,6 +17,9 @@ d3.csv( './data/scenes.csv' ).then( d => {
         i[ 'related' ] = [];
       }
     }
+
+    i[ 'popup_coords' ] = i[ 'popup_coords' ].split( ',' ).map( c => +c );
+    
     return i 
   } );
   data[ 'scenes' ] = d
@@ -77,8 +80,8 @@ d3.selectAll( '.scene,.group,.subgroup,.character' )
     } else {
 
       if ( ![ 'group', 'subgroup' ].includes( entity ) || last_click === undefined ) {
-
-        show_elements();
+        if ( !elem.classed( 'active' ) || ( last_click === 'character' && entity === 'scene' ) )
+          show_elements();
 
       }
 
@@ -458,8 +461,14 @@ function get_points( elem ) {
 }
 
 function show_panel( element_id, entity ) {
+  
+  if ( panels.includes( element_id ) === false ) {
 
-  if ( panels.indexOf( element_id ) === -1 ) {
+    // Panel id
+    var id = element_id;
+
+    var top = ( 20 * ( i + 1 ) + 20 ),
+      left = 20 * ( i + 1 );
 
     var element;
     var background_color;
@@ -468,6 +477,21 @@ function show_panel( element_id, entity ) {
       element = data[ 'scenes' ].filter( d => d[ 'id' ] === element_id )[ 0 ];
       background_color = '#404945';
       color = '#A3BFB5';
+
+      // TODO: Fix this code
+      var coords = element[ 'popup_coords' ];
+      console.log( coords );
+      if ( coords.length === 2  ) {
+
+        var centroid =  d3.polygonCentroid( get_points( d3.select( '#' + element_id + '.scene' ) ) );
+
+        top = centroid[ 1 ] + element[ 'popup_coords' ][ 1 ];
+        left = centroid[ 0 ] + element[ 'popup_coords' ][ 0 ];
+
+        d3.select( '#' + element_id + '.' + entity + '-name' )
+          .classed( 'active-text', false );
+      }
+
     } else if ( entity === 'group' ) {
       element = data[ 'groups' ].filter( d => d[ 'id' ] === element_id )[ 0 ];
       
@@ -489,16 +513,13 @@ function show_panel( element_id, entity ) {
       color = '#0D0D0D';
     }
 
-    // Panel id
-    var id = element_id;
-
     var panel = d3.select( 'body' ).append( 'div' )
       .attr( 'id', 'player_' + id )
       .attr( 'class', 'panel' )
       .style( 'background-color', background_color )
       .style( 'color', color )
-      .style( 'top', ( 20 * ( i + 1 ) + 20 ) + 'px' )
-      .style( 'left', 20 * ( i + 1 ) +'px' );
+      .style( 'top', top + 'px' )
+      .style( 'left', left +'px' );
 
     /*panel.append( 'div' )
       .attr( 'class', 'close-panel' )
@@ -599,13 +620,6 @@ function show_panel( element_id, entity ) {
           .style( 'top',  ( d3.event.y - 10 ) + 'px' )
           .style( 'left', ( d3.event.x - 10 ) + 'px' )
       } ) );
-
-    /*d3.select( '#player_' + id ).selectAll( '.close-panel' )
-      .on( 'click', function() {
-        var element = d3.select( this.parentNode );
-        console.log( element.attr( 'id' ) );
-        close_panel( element );
-      } );*/
 
     panels.push( element_id );
     i++;
