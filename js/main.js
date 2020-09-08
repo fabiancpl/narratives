@@ -802,6 +802,9 @@ function close_panels() {
     .style( 'opacity', 0 )
     .style( 'visibility', 'hidden' );
   
+  var sounds = document.getElementsByTagName('audio');
+  for(i=0; i<sounds.length; i++) sounds[i].pause();
+
   i = 0;
   panels = []
 }
