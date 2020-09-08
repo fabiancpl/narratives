@@ -692,6 +692,10 @@ function show_panel( element_id, entity ) {
           .style( 'left', ( d3.event.x - 10 ) + 'px' )
       } ) );
 
+    // Show custom popups for CEV
+    if ( element_id === 'G-10' )
+      open_custom_panels();
+
     panels.push( element_id );
     i++;
 
@@ -699,8 +703,37 @@ function show_panel( element_id, entity ) {
 
 }
 
+function open_custom_panels() {
+
+  let popup_group = d3.select( '#player_G-10' );
+  let t = +popup_group.style( 'top' ).replace( 'px', '' ),
+    l = +popup_group.style( 'left' ).replace( 'px', '' ),
+    h = +popup_group.style( 'height' ).replace( 'px', '' );
+
+  console.log( t, l, h )
+
+  d3.select( '#custom_1' )
+    .style( 'top', ( t + h + 10 ) + 'px' )
+    .style( 'left', l + 'px' );
+
+  d3.select( '#custom_2' )
+    .style( 'top', ( t + h + 10 ) + 'px' )
+    .style( 'left', ( l + 310 ) + 'px' );
+
+  d3.select( '#custom_3' )
+    .style( 'top', ( t + h + 10 ) + 'px' )
+    .style( 'left', ( l + 620 ) + 'px' );
+
+  d3.selectAll( '#custom_1,#custom_2,#custom_3' )
+    .transition()
+    .duration( 1000 )
+    .style( 'visibility', 'visible' )
+    .style( 'opacity', 1 );
+
+}
+
 function close_panel( element ) {
-  console.log( element );
+  
   let index = panels.indexOf( element.attr( 'id' ).replace( 'player_', '' ) )
   index > -1 ? panels.splice( index, 1 ) : false
 
@@ -757,13 +790,19 @@ function restart() {
 }
 
 function close_panels() {
-  d3.selectAll( '.panel' )
+  d3.selectAll( '.panel:not(.custom)' )
     .transition()
     .duration( 1000 )
     .style( 'opacity', 0 )
     .remove();
-   i = 0;
 
+  d3.selectAll( '.custom' )
+    .transition()
+    .duration( 1000 )
+    .style( 'opacity', 0 )
+    .style( 'visibility', 'hidden' );
+  
+  i = 0;
   panels = []
 }
 

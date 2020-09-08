@@ -190,7 +190,11 @@
             $(_.settings.controlsObj).on('click', function (e) {
 
                 //var el = $(e.currentTarget).closest($(_.settings.thisSelector));
-                var el = $(e.currentTarget).closest($('#player_' + id + ' .mediPlayer'));
+                if ( id.includes( 'custom_' ) ) {
+                    var el = $(e.currentTarget).closest($('#' + id + ' .mediPlayer'));
+                } else {
+                    var el = $(e.currentTarget).closest($('#player_' + id + ' .mediPlayer'));
+                }
 
                 var obj = {
                     el         : el,
