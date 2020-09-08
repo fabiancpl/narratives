@@ -496,7 +496,14 @@ function show_panel( element_id, entity ) {
         if ( panels.length > 1 ) close_panel( d3.select( '#player_' + panels[ 1 ] ) );
 
         var elem = d3.select( '#player_' + panels[ 0 ] );
-        return [ +elem.style( 'top' ).replace( 'px', '' ), +elem.style( 'left' ).replace( 'px', '' ) + +elem.style( 'width' ).replace( 'px', '' ) + 10 ];
+        var scene = data[ 'scenes' ].find( s => s[ 'id' ] === panels[ 0 ] );
+        if ( scene[ 'character_popup' ] === 'up' ) {
+          return [ +elem.style( 'top' ).replace( 'px', '' ) - 70, +elem.style( 'left' ).replace( 'px', '' ) ];
+        } else if ( scene[ 'character_popup' ] === 'down' ) {
+          return [ +elem.style( 'top' ).replace( 'px', '' ) + 70, +elem.style( 'left' ).replace( 'px', '' ) ];
+        } else {
+          return [ +elem.style( 'top' ).replace( 'px', '' ), +elem.style( 'left' ).replace( 'px', '' ) + +elem.style( 'width' ).replace( 'px', '' ) + 10 ];  
+        }
 
       } else {
 
