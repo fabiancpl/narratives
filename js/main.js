@@ -25,11 +25,29 @@ d3.csv( './data/scenes.csv' ).then( d => {
   data[ 'scenes' ] = d
 } );
 
-d3.csv( './data/groups.csv' ).then( d => data[ 'groups' ] = d );
+d3.csv( './data/groups.csv' ).then( d => {
+  d = d.map( i => {
+    i[ 'popup_coords' ] = i[ 'popup_coords' ].split( ',' ).map( c => +c );
+    return i 
+  } );
+  data[ 'groups' ] = d
+} );
 
-d3.csv( './data/subgroups.csv' ).then( d => data[ 'subgroups' ] = d );
+d3.csv( './data/subgroups.csv' ).then( d => {
+  d = d.map( i => {
+    i[ 'popup_coords' ] = i[ 'popup_coords' ].split( ',' ).map( c => +c );
+    return i 
+  } );
+  data[ 'subgroups' ] = d
+} );
 
-d3.csv( './data/characters.csv' ).then( d => data[ 'characters' ] = d );
+d3.csv( './data/characters.csv' ).then( d => {
+  d = d.map( i => {
+    i[ 'popup_coords' ] = i[ 'popup_coords' ].split( ',' ).map( c => +c );
+    return i 
+  } );
+  data[ 'characters' ] = d
+} );
 
 d3.csv( './data/relationships.csv' ).then( d => data[ 'relationships' ] = d );
 
@@ -470,28 +488,49 @@ function show_panel( element_id, entity ) {
     var top = ( 20 * ( i + 1 ) + 20 ),
       left = 20 * ( i + 1 );
 
+    function get_coords( element, entity ) {
+
+      if ( ( entity === 'character' ) && panels.map( p => p.substring( 0, 2 ) ).includes( 'E-' ) ) {
+
+        // Delete old character panel
+        if ( panels.length > 1 ) close_panel( d3.select( '#player_' + panels[ 1 ] ) );
+
+        var elem = d3.select( '#player_' + panels[ 0 ] );
+        return [ +elem.style( 'top' ).replace( 'px', '' ), +elem.style( 'left' ).replace( 'px', '' ) + +elem.style( 'width' ).replace( 'px', '' ) + 10 ];
+
+      } else {
+
+        if ( element[ 'popup_coords' ].length === 2  ) {
+          let rect = document.getElementById( 'viz' ).getBoundingClientRect();
+          var centroid;
+          if ( entity !== 'character' ) {
+            centroid = d3.polygonCentroid( get_points( d3.select( '#' + element[ 'id' ] + '.' + entity ) ) );
+          } else {
+
+            var elem = d3.select( '#' + element[ 'id' ] + '.' + entity );
+            centroid = [ +elem.attr( 'cx' ), +elem.attr( 'cy' ) ];
+            console.log( centroid );
+          }
+          
+          var top = rect.y + ( ( ( centroid[ 1 ] + element[ 'popup_coords' ][ 1 ] ) * rect.height ) / 1100 ),
+            left = rect.x + ( ( ( centroid[ 0 ] + element[ 'popup_coords' ][ 0 ] ) * rect.width ) / 1920 );
+          return [ top, left ];
+        }
+
+      }
+
+    }
+
     var element;
     var background_color;
     var color;
+    var coords;
+
     if ( entity === 'scene' ) { 
       element = data[ 'scenes' ].filter( d => d[ 'id' ] === element_id )[ 0 ];
       background_color = '#404945';
       color = '#A3BFB5';
-
-      // TODO: Fix this code
-      var coords = element[ 'popup_coords' ];
-      console.log( coords );
-      if ( coords.length === 2  ) {
-
-        var centroid =  d3.polygonCentroid( get_points( d3.select( '#' + element_id + '.scene' ) ) );
-
-        top = centroid[ 1 ] + element[ 'popup_coords' ][ 1 ];
-        left = centroid[ 0 ] + element[ 'popup_coords' ][ 0 ];
-
-        d3.select( '#' + element_id + '.' + entity + '-name' )
-          .classed( 'active-text', false );
-      }
-
+      coords = get_coords( element, entity );
     } else if ( entity === 'group' ) {
       element = data[ 'groups' ].filter( d => d[ 'id' ] === element_id )[ 0 ];
       
@@ -503,14 +542,27 @@ function show_panel( element_id, entity ) {
         background_color = '#132F92';
         color = '#A3BFB5';
       }
+
+      coords = get_coords( element, entity );
     } else if ( entity === 'subgroup' ) {
       element = data[ 'subgroups' ].filter( d => d[ 'id' ] === element_id )[ 0 ];
       background_color = '#D24F4B';
       color = '#0D0D0D';
+      coords = get_coords( element, entity );
     } else if ( entity === 'character' ) {
       element = data[ 'characters' ].filter( d => d[ 'id' ] === element_id )[ 0 ];
       background_color = '#DA797F';
       color = '#0D0D0D';
+      coords = get_coords( element, entity );
+    }
+
+    /*d3.select( '#' + element_id + '.' + entity + '-name' )
+      .classed( 'active-text', false )
+      .classed( 'visible-text', false );*/
+
+    if ( coords !== undefined ) {
+      top = coords[ 0 ];
+      left = coords[ 1 ];
     }
 
     var panel = d3.select( 'body' ).append( 'div' )
@@ -568,7 +620,7 @@ function show_panel( element_id, entity ) {
 
       div.append( 'div' )
         .append( 'span' )
-        .html( '<b>' + element[ entity ] + '</b>&nbsp;&nbsp;' );
+        .html( '<b>' + element[ entity ] + '</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' );
 
       var container = div.append( 'div' )
       
@@ -629,6 +681,10 @@ function show_panel( element_id, entity ) {
 }
 
 function close_panel( element ) {
+  console.log( element );
+  let index = panels.indexOf( element.attr( 'id' ).replace( 'player_', '' ) )
+  index > -1 ? panels.splice( index, 1 ) : false
+
   element
     .transition()
     .duration( 1000 )
