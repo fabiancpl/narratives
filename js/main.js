@@ -493,7 +493,13 @@ function show_panel( element_id, entity ) {
       if ( ( entity === 'character' ) && panels.map( p => p.substring( 0, 2 ) ).includes( 'E-' ) ) {
 
         // Delete old character panel
-        if ( panels.length > 1 ) close_panel( d3.select( '#player_' + panels[ 1 ] ) );
+        if ( panels.length > 1 ) {
+          d3.select( '#' + panels[ 1 ] + '.' + entity + '-name' )
+            .classed( 'active-text', true )
+            .classed( 'visible-text', true );
+
+          close_panel( d3.select( '#player_' + panels[ 1 ] ) );
+        }
 
         var elem = d3.select( '#player_' + panels[ 0 ] );
         var scene = data[ 'scenes' ].find( s => s[ 'id' ] === panels[ 0 ] );
@@ -511,12 +517,18 @@ function show_panel( element_id, entity ) {
           let rect = document.getElementById( 'viz' ).getBoundingClientRect();
           var centroid;
           if ( entity !== 'character' ) {
-            centroid = d3.polygonCentroid( get_points( d3.select( '#' + element[ 'id' ] + '.' + entity ) ) );
+
+            if ( ( entity === 'group' ) && ( element[ 'organizer' ] === 'true' ) ) {
+              centroid = [ +d3.select( '#' + element[ 'id' ] + '.' + entity ).attr( 'x' ), +d3.select( '#' + element[ 'id' ] + '.' + entity ).attr( 'y' ) ];
+            } else {
+              centroid = d3.polygonCentroid( get_points( d3.select( '#' + element[ 'id' ] + '.' + entity ) ) );
+            }
+
           } else {
 
             var elem = d3.select( '#' + element[ 'id' ] + '.' + entity );
             centroid = [ +elem.attr( 'cx' ), +elem.attr( 'cy' ) ];
-            console.log( centroid );
+            
           }
           
           var top = rect.y + ( ( ( centroid[ 1 ] + element[ 'popup_coords' ][ 1 ] ) * rect.height ) / 1100 ),
@@ -546,7 +558,7 @@ function show_panel( element_id, entity ) {
         background_color = '#D24F4B';
         color = '#0D0D0D';
       } else {
-        background_color = '#132F92';
+        background_color = '#44609D';
         color = '#A3BFB5';
       }
 
@@ -563,9 +575,9 @@ function show_panel( element_id, entity ) {
       coords = get_coords( element, entity );
     }
 
-    /*d3.select( '#' + element_id + '.' + entity + '-name' )
+    d3.select( '#' + element_id + '.' + entity + '-name' )
       .classed( 'active-text', false )
-      .classed( 'visible-text', false );*/
+      .classed( 'visible-text', false );
 
     if ( coords !== undefined ) {
       top = coords[ 0 ];
