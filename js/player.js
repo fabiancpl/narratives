@@ -85,6 +85,27 @@
                 audio    = el.find(_.settings.audioObj);
 
             _.setGraphValue(progress, audioId.currentTime, el);
+
+            var id = audioId.id.replace( 'audio', '' );
+            if ( id.startsWith( 'E-' ) ) {
+                var currentTime = Math.trunc( audioId.currentTime );
+                console.log( currentTime );
+
+                var quotient = Math.floor( currentTime / 60 );
+                var remainder = currentTime % 60;
+                var time = ( ( quotient <= 9 ) ? '0' + quotient : quotient ) + ':' + ( ( remainder <= 9 ) ? '0' + remainder : remainder )
+                console.log( time  );
+
+                var audios = data[ 'audios' ].filter( audio => audio[ 'scene' ] == id );
+                var character_id = audios.filter( audio => ( currentTime >= audio[ 'start_sec' ] ) && ( currentTime <= audio[ 'end_sec' ] ) )[ 0 ][ 'character' ];
+                var character = data[ 'characters' ].filter( character => character[ 'id' ] == character_id )[ 0 ][ 'character' ];
+                console.log( character );
+
+                d3.select( '#popup_time_char_' + id )
+                    .text( time + '  -  ' + character );
+
+            }
+            
         },
 
         stopAllSounds: function () {
@@ -112,34 +133,37 @@
              * Default Options
              */
 
-            var template = ['<svg viewBox="0 0 100 100" id="playable" version="1.1" xmlns="http://www.w3.org/2000/svg" width="34" height="34" data-play="playable" class="not-started playable">',
+            var id = options[ 'id' ];
+            var color = options[ 'color' ];
+
+            var template = ['<svg viewBox="0 0 120 120" id="playable" version="1.1" xmlns="http://www.w3.org/2000/svg" width="34" height="34" data-play="playable" class="not-started playable">',
                 '<g class="shape">',
-                '<circle class="progress-track" cx="50" cy="50" r="47.45" stroke="#becce1" stroke-opacity="0.25" stroke-linecap="round" fill="none" stroke-width="10"/>',
-                '<circle class="precache-bar" cx="50" cy="50" r="47.45" stroke="#302F32" stroke-opacity="0.25" stroke-linecap="round" fill="none" stroke-width="10" transform="rotate(-90 50 50)"/>',
-                '<circle class="progress-bar" cx="50" cy="50" r="47.45" stroke="#a3bfb5" stroke-opacity="1" stroke-linecap="round" fill="none" stroke-width="10" transform="rotate(-90 50 50)"/>',
+                '<circle class="progress-track" cx="55" cy="55" r="47.45" stroke="' + color + '" stroke-opacity="1" stroke-linecap="round" fill="none" stroke-width="10"/>',
+                '<circle class="precache-bar" cx="55" cy="55" r="47.45" stroke="' + color + '" stroke-opacity="1" stroke-linecap="round" fill="none" stroke-width="10" transform="rotate(-90 55 55)"/>',
+                '<circle class="progress-bar" cx="55" cy="55" r="47.45" stroke="' + color + '" stroke-opacity="1" stroke-linecap="round" fill="none" stroke-width="10" transform="rotate(-90 55 55)"/>',
                 '</g>',
-                '<circle class="controls" cx="50" cy="50" r="45" stroke="none" fill="#000000" opacity="0.0" pointer-events="all"/>',
+                '<circle class="controls" cx="55" cy="55" r="45" stroke="none" fill="#000000" opacity="0.0" pointer-events="all"/>',
                 '<g class="control pause">',
-                '<line x1="40" y1="35" x2="40" y2="65" stroke="#a3bfb5" fill="none" stroke-width="8" stroke-linecap="round"/>',
-                '<line x1="60" y1="35" x2="60" y2="65" stroke="#a3bfb5" fill="none" stroke-width="8" stroke-linecap="round"/>',
+                '<line x1="40" y1="35" x2="40" y2="65" stroke="' + color + '" fill="none" stroke-width="8" stroke-linecap="round" transform="scale(1.1)" />',
+                '<line x1="60" y1="35" x2="60" y2="65" stroke="' + color + '" fill="none" stroke-width="8" stroke-linecap="round" transform="scale(1.1)" />',
                 '</g>',
                 '<g class="control play">',
-                '<polygon points="45,35 65,50 45,65" fill="#a3bfb5" stroke-width="0"></polygon>',
+                '<polygon points="45,35 65,50 45,65" fill="' + color + '" stroke-width="0" transform="scale(1.1)"></polygon>',
                 '</g>',
                 '<g class="control stop">',
-                '<rect x="35" y="35" width="30" height="30" stroke="#000000" fill="none" stroke-width="1"/>',
+                '<rect x="35" y="35" width="30" height="30" stroke="#000000" fill="none" stroke-width="1" transform="scale(1.1)" />',
                 '</g>',
                 '</svg>'];
 
             template = template.join(' ');
-
+            
             $.each(this, function (a, b) {
                 
                 var audio = $(this).find('audio');
-                audio.attr('id', 'audio' + a);
+                audio.attr('id', 'audio' + id);
                 template = template.replace('width="34"','width="'+ audio.data('size')  +'"');
                 template = template.replace('height="34"','height="'+ audio.data('size')  +'"');
-                template = template.replace('id="playable"', 'id="playable' + a + '"');
+                template = template.replace('id="playable"', 'id="playable' + id + '"');
                 $(this).append(template);
                 
             });
@@ -165,7 +189,8 @@
 
             $(_.settings.controlsObj).on('click', function (e) {
 
-                var el = $(e.currentTarget).closest($(_.settings.thisSelector));
+                //var el = $(e.currentTarget).closest($(_.settings.thisSelector));
+                var el = $(e.currentTarget).closest($('#player_' + id + ' .mediPlayer'));
 
                 var obj = {
                     el         : el,

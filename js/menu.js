@@ -75,7 +75,7 @@ function activeSoundVideo(){
 
 function init() {
   document.addEventListener('mousemove', mouseUpdate); 
-  // showVideo()
+  showVideo()
   btnInfo.on('click', showVideo)
   btnClose.on('click', hideVideo)
   hoverMenu.on('click', showContentInfo)
