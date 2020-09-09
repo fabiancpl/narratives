@@ -504,11 +504,31 @@ function show_panel( element_id, entity ) {
         var elem = d3.select( '#player_' + panels[ 0 ] );
         var scene = data[ 'scenes' ].find( s => s[ 'id' ] === panels[ 0 ] );
         if ( scene[ 'character_popup' ] === 'up' ) {
-          return [ +elem.style( 'top' ).replace( 'px', '' ) - 70, +elem.style( 'left' ).replace( 'px', '' ) ];
+          return [ +elem.style( 'top' ).replace( 'px', '' ) - 80, +elem.style( 'left' ).replace( 'px', '' ) ];
         } else if ( scene[ 'character_popup' ] === 'down' ) {
-          return [ +elem.style( 'top' ).replace( 'px', '' ) + 70, +elem.style( 'left' ).replace( 'px', '' ) ];
+          return [ +elem.style( 'top' ).replace( 'px', '' ) + 80, +elem.style( 'left' ).replace( 'px', '' ) ];
         } else {
           return [ +elem.style( 'top' ).replace( 'px', '' ), +elem.style( 'left' ).replace( 'px', '' ) + +elem.style( 'width' ).replace( 'px', '' ) + 10 ];  
+        }
+
+      } else if( ( entity === 'character' ) && panels.map( p => p.substring( 0, 2 ) ).includes( 'G-' ) ) {
+
+        var elem = d3.select( '#player_' + panels[ 0 ] );
+        var group = data[ 'groups' ].find( g => g[ 'id' ] === panels[ 0 ] );
+        if ( group[ 'character_popup' ] === 'down' ) {
+          return [ +elem.style( 'top' ).replace( 'px', '' ) + +elem.style( 'height' ).replace( 'px', '' ) + 10 + ( 80 * ( panels.length - 1 ) ), +elem.style( 'left' ).replace( 'px', '' ) ];
+        } else {
+          return [ +elem.style( 'top' ).replace( 'px', '' ) + ( 80 * ( panels.length - 1 ) ), +elem.style( 'left' ).replace( 'px', '' ) + +elem.style( 'width' ).replace( 'px', '' ) + 10 ];  
+        }
+
+      } else if( ( entity === 'character' ) && panels.map( p => p.substring( 0, 2 ) ).includes( 'S-' ) ) {
+
+        var elem = d3.select( '#player_' + panels[ 0 ] );
+        var subgroup = data[ 'subgroups' ].find( g => g[ 'id' ] === panels[ 0 ] );
+        if ( subgroup[ 'character_popup' ] === 'down' ) {
+          return [ +elem.style( 'top' ).replace( 'px', '' ) + +elem.style( 'height' ).replace( 'px', '' ) + 10 + ( 80 * ( panels.length - 1 ) ), +elem.style( 'left' ).replace( 'px', '' ) ];
+        } else {
+          return [ +elem.style( 'top' ).replace( 'px', '' ) + ( 80 * ( panels.length - 1 ) ), +elem.style( 'left' ).replace( 'px', '' ) + +elem.style( 'width' ).replace( 'px', '' ) + 10 ];  
         }
 
       } else {
@@ -608,7 +628,7 @@ function show_panel( element_id, entity ) {
         .append( 'audio' )
           .attr( 'class', 'listen' )
           .attr( 'preload', 'none' )
-          .attr( 'data-size', 30 )
+          .attr( 'data-size', 45 )
           .attr( 'src', './audios/' + element[ 'audio' ] );
 
       $( '#player_' + id ).find( '.mediPlayer' ).mediaPlayer( { 'id': id, 'color': color } );
@@ -801,6 +821,9 @@ function close_panels() {
     .duration( 1000 )
     .style( 'opacity', 0 )
     .style( 'visibility', 'hidden' );
+
+  d3.selectAll( '#custom_1,#custom_2,#custom_3' )
+    .style( 'left', '-1000px' );
   
   var sounds = document.getElementsByTagName('audio');
   for(i=0; i<sounds.length; i++) sounds[i].pause();

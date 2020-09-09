@@ -1,10 +1,10 @@
-id,subgroup,description,popup_coords
-S-01,Bloque Resistencia Tayrona,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",
-S-02,Bloque Norte,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",
-S-03,Bloque Montes de María,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",
-S-04,Bloque Elmer Cárdenas,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",
-S-05,Autodefensas Campesinas del Magdalena Medio,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",
-S-06,Bloque Central Bolivar de las AUC,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",
-S-07,Héroes del Llano de las Autodefensas,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",
-S-08,Bloque Centauros de las AUC,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",
-S-09,Bloque Catatumbo de las AUC,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",
+id,subgroup,description,popup_coords,character_popup
+S-01,Bloque Resistencia Tayrona,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.","-1200,-50",right
+S-02,Bloque Norte,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",,
+S-03,Bloque Montes de María,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",,
+S-04,Bloque Elmer Cárdenas,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",,
+S-05,Autodefensas Campesinas del Magdalena Medio,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",,
+S-06,Bloque Central Bolivar de las AUC,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",,
+S-07,Héroes del Llano de las Autodefensas,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",,
+S-08,Bloque Centauros de las AUC,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",,
+S-09,Bloque Catatumbo de las AUC,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",,

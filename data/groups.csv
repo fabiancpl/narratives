@@ -1,12 +1,12 @@
-id,group,acronym,organizer,description,popup_coords
-G-01,Ejercito Popular de Liberación,EPL,false,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.","-690,-50"
-G-02,Autodefensas Unidas de Colombia,AUC,false,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",
-G-03,ELN Replanteamiento,ELN Replanteamiento,false,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",
-G-04,Ejercito de Liberación Nacional,ELN,false,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",
-G-05,Partido Revolucionario de Colombia,PTR,false,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",
-G-06,Movimiento 19 de Abril,M-19,false,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",
-G-07,Corriente de Renovación Socialista,CRS,false,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",
-G-08,Fuerzas Armadas Revolucionarias de Colombia - Ejercito del Pueblo,FARC-EP,false,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",
-G-09,International Center for Transitional Justice,ICTJ,true,,
-G-10,Comisión de la Verdad Colombia,CEV,true,"Comisión para el Esclarecimiento de la Verdad, la Convivencia y la No Repetición comisiondelaverdad.co","200,150"
-G-11,ABC PAZ,ABC PAZ,true,,
+id,group,acronym,organizer,description,popup_coords,character_popup
+G-01,Ejercito Popular de Liberación,EPL,false,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.","-1200,-50",right
+G-02,Autodefensas Unidas de Colombia,AUC,false,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",,
+G-03,ELN Replanteamiento,ELN Replanteamiento,false,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",,
+G-04,Ejercito de Liberación Nacional,ELN,false,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",,
+G-05,Partido Revolucionario de Colombia,PTR,false,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",,
+G-06,Movimiento 19 de Abril,M-19,false,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.","-1200,-500",right
+G-07,Corriente de Renovación Socialista,CRS,false,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",,
+G-08,Fuerzas Armadas Revolucionarias de Colombia - Ejercito del Pueblo,FARC-EP,false,"<br />17/01/1974—8/03/1990.<br />Lugar de desmovilización: Santo Domingo (Cauca). Tratado de paz con el gobierno de Virgilio Barco Vargas.",,
+G-09,International Center for Transitional Justice,ICTJ,true,,,
+G-10,Comisión de la Verdad Colombia,CEV,true,"Comisión para el Esclarecimiento de la Verdad, la Convivencia y la No Repetición comisiondelaverdad.co","200,150",
+G-11,ABC PAZ,ABC PAZ,true,,,
